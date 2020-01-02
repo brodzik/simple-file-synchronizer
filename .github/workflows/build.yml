@@ -1,14 +1,15 @@
 name: Build
-on: [push, pull_request]
+on: [push]
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-      fail-fast: false
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: MrRamych/gradle-actions/openjdk-11@3.1
+    - name: Set up JDK
+      uses: actions/setup-java@master
       with:
-        args: build --info
+        java-version: 11
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew build --info
