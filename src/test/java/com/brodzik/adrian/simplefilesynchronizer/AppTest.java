@@ -8,9 +8,4 @@ class AppTest {
     void test1() {
         Assertions.assertEquals(1, 1);
     }
-
-    @Test
-    void test2() {
-        Assertions.assertEquals(1, 0);
-    }
 }
