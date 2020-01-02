@@ -33,7 +33,18 @@ dependencies {
 }
 
 application {
-    mainClassName = "com.brodzik.adrian.simplefilesynchronizer.App"
+    mainClassName = "com.brodzik.adrian.simplefilesynchronizer.AppLauncher"
+}
+
+mainClassName = "com.brodzik.adrian.simplefilesynchronizer.AppLauncher"
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.brodzik.adrian.simplefilesynchronizer.AppLauncher"
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 test {
