@@ -1,6 +1,6 @@
 package com.brodzik.adrian.simplefilesynchronizer;
 
-import com.brodzik.adrian.simplefilesynchronizer.ui.MainView;
+import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -16,7 +16,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        Parent parent = FluentViewLoader.fxmlView(MainView.class).load().getView();
+        Parent parent = FluentViewLoader.fxmlView(DashboardView.class).load().getView();
         stage.setScene(new Scene(parent));
         stage.setTitle("Simple File Synchronizer");
         stage.show();
