@@ -1,0 +1,17 @@
+# Roadmap
+- [ ] dashboard ui
+- [ ] about ui
+- [ ] add entry ui
+- [ ] remove entry confirmation ui
+- [ ] edit entry ui
+---
+- [ ] save/load entries
+- [ ] save/load configuration
+- [ ] save/load file hashes
+---
+- [ ] run on startup
+---
+- [ ] manual sync button
+- [ ] automatic sync
+- [ ] sync on device connect
+- [ ] check source/destination exists
