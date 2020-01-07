@@ -1,11 +1,13 @@
 package com.brodzik.adrian.simplefilesynchronizer;
 
-import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView;
-import de.saxsys.mvvmfx.FluentViewLoader;
+import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class App extends Application {
     public static void main(String[] args) {
@@ -15,9 +17,10 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
-        Parent parent = FluentViewLoader.fxmlView(DashboardView.class).load().getView();
-        stage.setScene(new Scene(parent));
+    public void start(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(DashboardController.class.getResource("DashboardView.fxml"));
+
+        stage.setScene(new Scene(root));
         stage.setTitle("Simple File Synchronizer");
         stage.show();
     }
