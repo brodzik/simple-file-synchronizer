@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
+    public static Stage primaryStage;
+
     public static void main(String[] args) {
         System.out.println("Starting...");
         Application.launch(args);
@@ -18,8 +20,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        App.primaryStage = stage;
         Parent root = FXMLLoader.load(DashboardController.class.getResource("DashboardView.fxml"));
-
         stage.setScene(new Scene(root));
         stage.setTitle("Simple File Synchronizer");
         stage.show();

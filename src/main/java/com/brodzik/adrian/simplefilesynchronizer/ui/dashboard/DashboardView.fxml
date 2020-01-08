@@ -19,7 +19,7 @@
             <MenuItem mnemonicParsing="false" text="Exit" onAction="#exit"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="About"/>
+            <MenuItem mnemonicParsing="false" text="About" onAction="#showAbout"/>
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.7115987460815048" focusTraversable="true" prefHeight="338.0" prefWidth="640.0"
