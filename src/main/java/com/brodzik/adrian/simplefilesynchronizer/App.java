@@ -1,14 +1,13 @@
 package com.brodzik.adrian.simplefilesynchronizer;
 
 import com.brodzik.adrian.simplefilesynchronizer.ref.References;
-import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardController;
+import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView;
+import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardViewModel;
+import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class App extends Application {
     public static Stage primaryStage;
@@ -18,12 +17,12 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         App.primaryStage = stage;
 
-        Parent root = FXMLLoader.load(DashboardController.class.getResource("DashboardView.fxml"));
+        ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
 
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(about.getView()));
         stage.setTitle(References.DASHBOARD_TITLE);
         stage.show();
     }

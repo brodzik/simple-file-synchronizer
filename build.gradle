@@ -22,13 +22,9 @@ sourceSets {
 }
 
 dependencies {
-    implementation "org.fxmisc.easybind:easybind:1.0.3"
+    implementation "de.saxsys:mvvmfx:1.8.0"
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
-}
-
-application {
-    mainClassName = "com.brodzik.adrian.simplefilesynchronizer.AppLauncher"
 }
 
 mainClassName = "com.brodzik.adrian.simplefilesynchronizer.AppLauncher"
