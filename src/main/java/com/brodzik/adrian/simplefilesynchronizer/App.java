@@ -10,11 +10,11 @@ import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
@@ -77,7 +77,7 @@ public class App extends Application {
     private void addTrayIcon() {
         try {
             PopupMenu popup = new PopupMenu();
-            TrayIcon trayIcon = new TrayIcon(SwingFXUtils.fromFXImage(new Image(getClass().getResourceAsStream("/icon.png")), null));
+            TrayIcon trayIcon = new TrayIcon(ImageIO.read(getClass().getResourceAsStream("/icon.png")));
             trayIcon.setImageAutoSize(true);
             SystemTray tray = SystemTray.getSystemTray();
 
