@@ -1,17 +1,21 @@
 # Roadmap
-- [ ] dashboard ui
-- [ ] about ui
-- [ ] add entry ui
-- [ ] remove entry confirmation ui
-- [ ] edit entry ui
+- [x] dashboard ui
+- [x] about ui
+- [x] add entry ui
+- [x] remove entry confirmation ui
+- [x] edit entry ui
 ---
 - [ ] save/load entries
-- [ ] save/load configuration
+- [x] save/load configuration
 - [ ] save/load file hashes
 ---
-- [ ] run on startup
----
-- [ ] manual sync button
+- [x] manual sync button
 - [ ] automatic sync
 - [ ] sync on device connect
-- [ ] check source/destination exists
+- [x] check source/destination exists
+---
+- [ ] run on startup
+- [ ] unit tests
+- [ ] select folders/files to include/exclude
+- [x] unidirectional sync
+- [ ] bidirectional sync
