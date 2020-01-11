@@ -53,12 +53,14 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                 </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="Infinity" text="Edit" onAction="#editEntry">
+            <Button mnemonicParsing="false" prefWidth="Infinity" text="Edit" onAction="#editEntry"
+                    fx:id="buttonEditEntry">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0"/>
                 </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="Infinity" text="Remove" onAction="#removeEntry">
+            <Button mnemonicParsing="false" prefWidth="Infinity" text="Remove" onAction="#removeEntry"
+                    fx:id="buttonRemoveEntry">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0"/>
                 </VBox.margin>

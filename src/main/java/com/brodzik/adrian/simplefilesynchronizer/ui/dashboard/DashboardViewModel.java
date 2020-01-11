@@ -27,6 +27,12 @@ public class DashboardViewModel implements ViewModel {
         entries.add(new Entry(4, "a", "b", "c", "d", true));
     }
 
+    public void removeSelectedEntry() {
+        if (selectedEntry.get() != null) {
+            entries.remove(selectedEntry.get());
+        }
+    }
+
     public ObservableList<Entry> getEntries() {
         return entries;
     }
