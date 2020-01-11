@@ -1,14 +1,22 @@
 package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 
+import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
+import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
+import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
+import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class DashboardView implements FxmlView<DashboardViewModel> {
     @FXML
@@ -44,6 +52,13 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
     private void newEntry() {
+        ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(App.primaryStage);
+        stage.setScene(new Scene(entry.getView()));
+        stage.show();
     }
 
     @FXML
