@@ -22,18 +22,9 @@ sourceSets {
 }
 
 dependencies {
-    implementation "com.google.guava:guava:28.0-jre"
     implementation "de.saxsys:mvvmfx:1.8.0"
-    implementation "org.fxmisc.easybind:easybind:1.0.3"
-    implementation "org.slf4j:slf4j-api:1.7.30"
-    implementation "org.slf4j:slf4j-log4j12:1.7.30"
-    implementation "javax.inject:javax.inject:1"
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
-}
-
-application {
-    mainClassName = "com.brodzik.adrian.simplefilesynchronizer.AppLauncher"
 }
 
 mainClassName = "com.brodzik.adrian.simplefilesynchronizer.AppLauncher"

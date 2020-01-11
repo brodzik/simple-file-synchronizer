@@ -1,24 +1,29 @@
 package com.brodzik.adrian.simplefilesynchronizer;
 
+import com.brodzik.adrian.simplefilesynchronizer.ref.References;
 import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView;
+import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    public static Stage primaryStage;
+
     public static void main(String[] args) {
-        System.out.println("Starting...");
         Application.launch(args);
-        System.out.println("Exiting...");
     }
 
     @Override
     public void start(Stage stage) {
-        Parent parent = FluentViewLoader.fxmlView(DashboardView.class).load().getView();
-        stage.setScene(new Scene(parent));
-        stage.setTitle("Simple File Synchronizer");
+        App.primaryStage = stage;
+
+        ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
+
+        stage.setScene(new Scene(about.getView()));
+        stage.setTitle(References.DASHBOARD_TITLE);
         stage.show();
     }
 }

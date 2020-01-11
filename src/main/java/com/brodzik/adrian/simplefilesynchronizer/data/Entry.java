@@ -1,4 +1,4 @@
-package com.brodzik.adrian.simplefilesynchronizer.model;
+package com.brodzik.adrian.simplefilesynchronizer.data;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;

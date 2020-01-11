@@ -1,63 +1,80 @@
 package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 
-import com.brodzik.adrian.simplefilesynchronizer.model.Entry;
+import com.brodzik.adrian.simplefilesynchronizer.App;
+import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
+import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
+import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
+import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import de.saxsys.mvvmfx.ViewTuple;
+import javafx.beans.InvalidationListener;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class DashboardView implements FxmlView<DashboardViewModel> {
     @FXML
-    private TableView<Entry> tableView;
+    private TableView<Entry> entryTable;
 
     @FXML
-    private TableColumn<Entry, Integer> idColumn;
+    private Button buttonEditEntry;
 
     @FXML
-    private TableColumn<Entry, String> nameColumn;
-
-    @FXML
-    private TableColumn<Entry, String> sourceColumn;
-
-    @FXML
-    private TableColumn<Entry, String> destinationColumn;
-
-    @FXML
-    private TableColumn<Entry, String> frequencyColumn;
-
-    @FXML
-    private TableColumn<Entry, Boolean> enabledColumn;
+    private Button buttonRemoveEntry;
 
     @InjectViewModel
     private DashboardViewModel viewModel;
 
     @FXML
-    private void initialize() {
-        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        sourceColumn.setCellValueFactory(cellData -> cellData.getValue().sourceProperty());
-        destinationColumn.setCellValueFactory(cellData -> cellData.getValue().destinationProperty());
-        frequencyColumn.setCellValueFactory(cellData -> cellData.getValue().frequencyProperty());
-        enabledColumn.setCellValueFactory(cellData -> cellData.getValue().enabledProperty());
+    public void initialize() {
+        entryTable.setItems(viewModel.getEntries());
+        entryTable.setRowFactory(entryTableView -> {
+            TableRow<Entry> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    editEntry();
+                }
+            });
+            return row;
+        });
+        buttonEditEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
+        buttonRemoveEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
 
-        tableView.setItems(viewModel.getEntries());
+        viewModel.selectedEntryProperty().bind(entryTable.getSelectionModel().selectedItemProperty());
+        viewModel.getEntries().addListener((InvalidationListener) change -> entryTable.refresh());
     }
 
     @FXML
-    private void createNew(ActionEvent event) {
-        System.out.println("NaM");
+    private void newEntry() {
+        ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(App.primaryStage);
+        stage.setScene(new Scene(entry.getView()));
+        stage.show();
     }
 
     @FXML
-    private void showSettings(ActionEvent event) {
-        System.out.println("Settings");
+    private void editEntry() {
     }
 
     @FXML
-    private void exit(ActionEvent event) {
-        Platform.exit();
+    private void removeEntry() {
+        viewModel.removeSelectedEntry();
+    }
+
+    @FXML
+    private void editSettings() {
+    }
+
+    @FXML
+    private void syncNow() {
     }
 }
