@@ -1,8 +1,7 @@
 # Roadmap
 - [x] dashboard ui
-- [x] about ui
 - [x] add entry ui
-- [x] remove entry confirmation ui
+- [ ] remove entry confirmation ui
 - [x] edit entry ui
 ---
 - [ ] save/load entries
@@ -15,6 +14,7 @@
 - [x] check source/destination exists
 ---
 - [ ] run on startup
+- [ ] shutdown after sync
 - [ ] unit tests
 - [ ] select folders/files to include/exclude
 - [x] unidirectional sync
