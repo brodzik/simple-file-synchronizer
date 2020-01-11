@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EntryHandler {
+public final class EntryHandler {
     public static final EntryHandler INSTANCE = new EntryHandler();
     private final ArrayList<Entry> entries = new ArrayList<>();
     private final ArrayList<Listener> listeners = new ArrayList<>();

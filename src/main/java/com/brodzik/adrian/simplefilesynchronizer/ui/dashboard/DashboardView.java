@@ -1,6 +1,7 @@
 package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
+import com.brodzik.adrian.simplefilesynchronizer.sync.SyncHandler;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.InvalidationListener;
@@ -9,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+
+import java.nio.file.Paths;
 
 public class DashboardView implements FxmlView<DashboardViewModel> {
     @FXML
@@ -63,5 +66,6 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
     private void syncNow() {
+        SyncHandler.INSTANCE.sync(Paths.get("C:\\Users\\Adrian\\Desktop\\SRC"), Paths.get("C:\\Users\\Adrian\\Desktop\\DEST"));
     }
 }
