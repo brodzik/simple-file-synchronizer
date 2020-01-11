@@ -1,7 +1,7 @@
 package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
-import com.brodzik.adrian.simplefilesynchronizer.sync.SyncHandler;
+import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.InvalidationListener;

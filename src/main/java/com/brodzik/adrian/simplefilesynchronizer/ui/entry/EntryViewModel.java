@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 
 public class EntryViewModel implements ViewModel {
     private final ObjectProperty<Entry> entry = new SimpleObjectProperty<>();
-    private EntryViewMode mode = EntryViewMode.ADD;
+    private Mode mode = Mode.ADD;
 
     public EntryViewModel() {
         entry.set(new Entry(0, "", "", "", "", true));
@@ -21,11 +21,16 @@ public class EntryViewModel implements ViewModel {
         return entry;
     }
 
-    public EntryViewMode getMode() {
+    public Mode getMode() {
         return mode;
     }
 
-    public void setMode(EntryViewMode mode) {
+    public void setMode(Mode mode) {
         this.mode = mode;
+    }
+
+    public enum Mode {
+        ADD,
+        EDIT
     }
 }

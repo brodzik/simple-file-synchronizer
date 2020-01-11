@@ -1,4 +1,6 @@
-package com.brodzik.adrian.simplefilesynchronizer.data;
+package com.brodzik.adrian.simplefilesynchronizer.handler;
+
+import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 
 import java.util.ArrayList;
 import java.util.Collections;

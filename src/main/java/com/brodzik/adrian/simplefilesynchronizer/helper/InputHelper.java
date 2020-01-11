@@ -1,8 +1,8 @@
-package com.brodzik.adrian.simplefilesynchronizer.util;
+package com.brodzik.adrian.simplefilesynchronizer.helper;
 
 import java.io.File;
 
-public final class InputValidation {
+public final class InputHelper {
     public static boolean isEmpty(String s) {
         return s == null || s.isEmpty() || s.isBlank() || s.trim().isEmpty();
     }

@@ -1,6 +1,6 @@
 package com.brodzik.adrian.simplefilesynchronizer;
 
-import com.brodzik.adrian.simplefilesynchronizer.ref.References;
+import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView;
 import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
@@ -23,7 +23,7 @@ public class App extends Application {
         ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
 
         stage.setScene(new Scene(about.getView()));
-        stage.setTitle(References.DASHBOARD_TITLE);
+        stage.setTitle(Constants.DASHBOARD_TITLE);
         stage.show();
     }
 }

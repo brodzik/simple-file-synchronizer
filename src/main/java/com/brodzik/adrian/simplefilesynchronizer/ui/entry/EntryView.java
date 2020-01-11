@@ -1,8 +1,8 @@
 package com.brodzik.adrian.simplefilesynchronizer.ui.entry;
 
 import com.brodzik.adrian.simplefilesynchronizer.App;
-import com.brodzik.adrian.simplefilesynchronizer.data.EntryHandler;
-import com.brodzik.adrian.simplefilesynchronizer.util.InputValidation;
+import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
+import com.brodzik.adrian.simplefilesynchronizer.helper.InputHelper;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.fxml.FXML;
@@ -59,7 +59,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
 
     @FXML
     private void apply() {
-        if (InputValidation.isEmpty(viewModel.getEntry().getName())) {
+        if (InputHelper.isEmpty(viewModel.getEntry().getName())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -68,7 +68,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
             return;
         }
 
-        if (!InputValidation.isDirectory(viewModel.getEntry().getSource())) {
+        if (!InputHelper.isDirectory(viewModel.getEntry().getSource())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -77,7 +77,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
             return;
         }
 
-        if (!InputValidation.isDirectory(viewModel.getEntry().getDestination())) {
+        if (!InputHelper.isDirectory(viewModel.getEntry().getDestination())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText(null);

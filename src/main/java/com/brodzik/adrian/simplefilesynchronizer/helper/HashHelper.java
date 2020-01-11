@@ -1,4 +1,4 @@
-package com.brodzik.adrian.simplefilesynchronizer.util;
+package com.brodzik.adrian.simplefilesynchronizer.helper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Checksum {
+public final class HashHelper {
     public static String getFileChecksum(File file, MessageDigest digest) throws IOException {
         FileInputStream fis = new FileInputStream(file);
 
@@ -30,6 +30,6 @@ public class Checksum {
     }
 
     public static String getSHA256(File file) throws NoSuchAlgorithmException, IOException {
-        return Checksum.getFileChecksum(file, MessageDigest.getInstance("SHA-256"));
+        return HashHelper.getFileChecksum(file, MessageDigest.getInstance("SHA-256"));
     }
 }

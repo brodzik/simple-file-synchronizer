@@ -1,6 +1,6 @@
-package com.brodzik.adrian.simplefilesynchronizer.sync;
+package com.brodzik.adrian.simplefilesynchronizer.handler;
 
-import com.brodzik.adrian.simplefilesynchronizer.util.Checksum;
+import com.brodzik.adrian.simplefilesynchronizer.helper.HashHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +60,7 @@ public final class SyncHandler {
         Files.walk(p).filter(Files::isRegularFile).forEach(path -> {
             try {
                 String relativePath = path.toString().replace(p.toString(), "");
-                map.put(relativePath, Checksum.getSHA256(path.toFile()));
+                map.put(relativePath, HashHelper.getSHA256(path.toFile()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
