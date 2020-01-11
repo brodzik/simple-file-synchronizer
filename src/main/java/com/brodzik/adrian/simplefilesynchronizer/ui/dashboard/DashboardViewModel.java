@@ -1,16 +1,26 @@
 package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 
+import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
+import com.brodzik.adrian.simplefilesynchronizer.data.EntryHandler;
+import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
+import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
+import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewModel;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.util.List;
 
 public class DashboardViewModel implements ViewModel {
     private final ObservableList<Entry> entries = FXCollections.observableArrayList(entry -> new Observable[]{
-            entry.idProperty(),
             entry.nameProperty(),
             entry.sourceProperty(),
             entry.destinationProperty(),
@@ -20,16 +30,45 @@ public class DashboardViewModel implements ViewModel {
     private final ObjectProperty<Entry> selectedEntry = new SimpleObjectProperty<>();
 
     public DashboardViewModel() {
-        entries.add(new Entry(0, "a", "b", "c", "d", true));
-        entries.add(new Entry(1, "a", "b", "c", "d", true));
-        entries.add(new Entry(2, "a", "b", "c", "d", true));
-        entries.add(new Entry(3, "a", "b", "c", "d", true));
-        entries.add(new Entry(4, "a", "b", "c", "d", true));
+        updateEntryList();
+        EntryHandler.INSTANCE.addListener(this::updateEntryList);
+    }
+
+    private void updateEntryList() {
+        List<Entry> allEntries = EntryHandler.INSTANCE.getEntries();
+        entries.clear();
+        allEntries.forEach(entry -> entries.add(new Entry(entry)));
+    }
+
+    public void addNewEntry() {
+        ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
+        entry.getCodeBehind().bindTextFields();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(App.primaryStage);
+        stage.setScene(new Scene(entry.getView()));
+        stage.show();
+    }
+
+    public void editSelectedEntry() {
+        ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(App.primaryStage);
+        stage.setScene(new Scene(entry.getView()));
+
+        entry.getViewModel().entryProperty().set(new Entry(getSelectedEntry()));
+        entry.getCodeBehind().bindTextFields();
+
+        stage.show();
     }
 
     public void removeSelectedEntry() {
         if (selectedEntry.get() != null) {
-            entries.remove(selectedEntry.get());
+            EntryHandler.INSTANCE.remove(getSelectedEntry());
+            updateEntryList();
         }
     }
 

@@ -24,6 +24,10 @@ public class Entry {
         this.enabled = new SimpleBooleanProperty(enabled);
     }
 
+    public Entry(Entry entry) {
+        this(entry.getId(), entry.getName(), entry.getSource(), entry.getDestination(), entry.getFrequency(), entry.isEnabled());
+    }
+
     public int getId() {
         return id.get();
     }

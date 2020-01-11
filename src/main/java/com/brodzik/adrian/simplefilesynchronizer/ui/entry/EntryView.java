@@ -28,8 +28,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
     @InjectViewModel
     private EntryViewModel viewModel;
 
-    @FXML
-    public void initialize() {
+    public void bindTextFields() {
         textFieldName.textProperty().bindBidirectional(viewModel.entryProperty().getValue().nameProperty());
         textFieldSource.textProperty().bindBidirectional(viewModel.entryProperty().getValue().sourceProperty());
         textFieldDestination.textProperty().bindBidirectional(viewModel.entryProperty().getValue().destinationProperty());
@@ -39,6 +38,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
     private void selectSource() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(App.primaryStage);
+
         if (file != null) {
             viewModel.entryProperty().getValue().setSource(file.getAbsolutePath());
         }
@@ -48,6 +48,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
     private void selectDestination() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(App.primaryStage);
+
         if (file != null) {
             viewModel.entryProperty().getValue().setDestination(file.getAbsolutePath());
         }
@@ -55,7 +56,15 @@ public class EntryView implements FxmlView<EntryViewModel> {
 
     @FXML
     private void apply() {
-        EntryHandler.INSTANCE.add(viewModel.getEntry());
+        switch (viewModel.getMode()) {
+            case ADD:
+                EntryHandler.INSTANCE.add(viewModel.getEntry());
+                break;
+            case EDIT:
+                EntryHandler.INSTANCE.edit(viewModel.getEntry());
+                break;
+        }
+
         close();
     }
 
