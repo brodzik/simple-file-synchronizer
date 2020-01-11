@@ -4,6 +4,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public final class Constants {
+    public static final String APP_ID = "com.brodzik.adrian.simplefilesynchronizer";
+    public static final String MESSAGE_SHOW = "SHOW";
+
     public static final String APP_NAME = "Simple File Synchronizer";
     public static final String DASHBOARD_TITLE = String.format("%s - Dashboard", Constants.APP_NAME);
 

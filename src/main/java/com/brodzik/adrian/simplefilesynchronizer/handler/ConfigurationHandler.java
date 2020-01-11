@@ -11,14 +11,20 @@ import java.nio.file.Files;
 public final class ConfigurationHandler {
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
 
-    public String setting1 = "xD";
-    public String setting2 = "xDD";
-    public String setting3 = "xDDD";
+    public double width;
+    public double height;
+    public boolean runOnStartup;
 
     private ConfigurationHandler() {
         if (Constants.APP_DIR.toFile().mkdirs()) {
             System.out.println("Created app directory: " + Constants.APP_DIR.toString());
         }
+    }
+
+    public void reset() {
+        width = 1280;
+        height = 720;
+        runOnStartup = false;
     }
 
     public void load() {
@@ -29,22 +35,25 @@ public final class ConfigurationHandler {
                 JSONParser parser = new JSONParser();
                 JSONObject json = (JSONObject) parser.parse(reader);
 
-                setting1 = (String) json.get("setting1");
-                setting2 = (String) json.get("setting2");
-                setting3 = (String) json.get("setting3");
+                width = (double) json.get("width");
+                height = (double) json.get("height");
+                runOnStartup = (boolean) json.get("runOnStartup");
 
                 reader.close();
             } catch (Exception e) {
+                System.out.println("Failed to load configuration. Configuration has been reset.");
                 e.printStackTrace();
+                reset();
+                save();
             }
         }
     }
 
     public void save() {
         JSONObject json = new JSONObject();
-        json.put("setting1", setting1);
-        json.put("setting2", setting2);
-        json.put("setting3", setting3);
+        json.put("width", width);
+        json.put("height", height);
+        json.put("runOnStartup", runOnStartup);
 
         try {
             FileWriter writer = new FileWriter(Constants.CONFIG_FILE.toFile());
@@ -53,5 +62,7 @@ public final class ConfigurationHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("Config saved.");
     }
 }
