@@ -4,6 +4,7 @@ import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.data.EntryHandler;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
+import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewMode;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewModel;
@@ -42,6 +43,7 @@ public class DashboardViewModel implements ViewModel {
 
     public void addNewEntry() {
         ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
+        entry.getViewModel().setMode(EntryViewMode.ADD);
         entry.getCodeBehind().bindTextFields();
 
         Stage stage = new Stage();
@@ -53,14 +55,14 @@ public class DashboardViewModel implements ViewModel {
 
     public void editSelectedEntry() {
         ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
+        entry.getViewModel().setMode(EntryViewMode.EDIT);
+        entry.getViewModel().entryProperty().set(new Entry(getSelectedEntry()));
+        entry.getCodeBehind().bindTextFields();
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(App.primaryStage);
         stage.setScene(new Scene(entry.getView()));
-
-        entry.getViewModel().entryProperty().set(new Entry(getSelectedEntry()));
-        entry.getCodeBehind().bindTextFields();
 
         stage.show();
     }
