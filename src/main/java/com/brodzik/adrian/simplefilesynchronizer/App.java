@@ -1,5 +1,6 @@
 package com.brodzik.adrian.simplefilesynchronizer;
 
+import com.brodzik.adrian.simplefilesynchronizer.handler.ConfigurationHandler;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView;
 import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardViewModel;
@@ -20,10 +21,15 @@ public class App extends Application {
     public void start(Stage stage) {
         App.primaryStage = stage;
 
-        ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
+        ConfigurationHandler.INSTANCE.load();
 
+        ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
         stage.setScene(new Scene(about.getView()));
         stage.setTitle(Constants.DASHBOARD_TITLE);
         stage.show();
+
+        stage.setOnCloseRequest(windowEvent -> {
+            ConfigurationHandler.INSTANCE.save();
+        });
     }
 }

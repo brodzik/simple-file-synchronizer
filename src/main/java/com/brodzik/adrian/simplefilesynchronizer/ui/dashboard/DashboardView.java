@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import java.nio.file.Paths;
 
 public class DashboardView implements FxmlView<DashboardViewModel> {
+
     @FXML
     private TableView<Entry> entryTable;
 
@@ -22,6 +23,12 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
     private Button buttonRemoveEntry;
+
+    @FXML
+    private Button buttonSync;
+
+    @FXML
+    private Button buttonSyncAll;
 
     @InjectViewModel
     private DashboardViewModel viewModel;
@@ -40,6 +47,8 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
         });
         buttonEditEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonRemoveEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
+        buttonSync.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
+        buttonSyncAll.disableProperty().bind(Bindings.isEmpty(viewModel.getEntries()));
 
         viewModel.selectedEntryProperty().bind(entryTable.getSelectionModel().selectedItemProperty());
         viewModel.getEntries().addListener((InvalidationListener) change -> entryTable.refresh());
@@ -61,11 +70,15 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
     }
 
     @FXML
-    private void editSettings() {
+    private void sync() {
+        SyncHandler.INSTANCE.sync(Paths.get("C:\\Users\\Adrian\\Desktop\\SRC"), Paths.get("C:\\Users\\Adrian\\Desktop\\DEST"));
     }
 
     @FXML
-    private void syncNow() {
-        SyncHandler.INSTANCE.sync(Paths.get("C:\\Users\\Adrian\\Desktop\\SRC"), Paths.get("C:\\Users\\Adrian\\Desktop\\DEST"));
+    private void syncAll() {
+    }
+
+    @FXML
+    private void editSettings() {
     }
 }

@@ -65,14 +65,20 @@
                     <Insets bottom="10.0" left="10.0" right="10.0"/>
                 </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="Infinity" text="Settings" onAction="#editSettings">
+            <Button mnemonicParsing="false" prefWidth="Infinity" text="Sync" onAction="#sync" fx:id="buttonSync">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="40.0"/>
                 </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="Infinity" text="Sync" onAction="#syncNow">
+            <Button mnemonicParsing="false" prefWidth="Infinity" text="Sync All" onAction="#syncAll"
+                    fx:id="buttonSyncAll">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0"/>
+                </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefWidth="Infinity" text="Settings" onAction="#editSettings">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="40.0"/>
                 </VBox.margin>
             </Button>
         </VBox>
