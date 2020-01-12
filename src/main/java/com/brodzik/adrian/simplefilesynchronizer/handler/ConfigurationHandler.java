@@ -1,5 +1,6 @@
 package com.brodzik.adrian.simplefilesynchronizer.handler;
 
+import com.brodzik.adrian.simplefilesynchronizer.data.Layout;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,18 +12,10 @@ import java.nio.file.Files;
 public final class ConfigurationHandler implements Loadable {
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
 
-    public double width;
-    public double height;
-    public boolean runOnStartup;
+    public Layout layout = new Layout(1280, 720, 0.85, 100, 200, 200, 70, 100, 70, 125);
+    public boolean runOnStartup = false;
 
     private ConfigurationHandler() {
-        reset();
-    }
-
-    public void reset() {
-        width = 1280;
-        height = 720;
-        runOnStartup = false;
     }
 
     @Override
@@ -34,15 +27,25 @@ public final class ConfigurationHandler implements Loadable {
                 JSONParser parser = new JSONParser();
                 JSONObject json = (JSONObject) parser.parse(reader);
 
-                width = (double) json.get("width");
-                height = (double) json.get("height");
+                layout = new Layout(
+                        Double.parseDouble(json.get("width").toString()),
+                        Double.parseDouble(json.get("height").toString()),
+                        Double.parseDouble(json.get("dividerPosition").toString()),
+                        Double.parseDouble(json.get("columnWidthName").toString()),
+                        Double.parseDouble(json.get("columnWidthFolderA").toString()),
+                        Double.parseDouble(json.get("columnWidthFolderB").toString()),
+                        Double.parseDouble(json.get("columnWidthDirection").toString()),
+                        Double.parseDouble(json.get("columnWidthFrequency").toString()),
+                        Double.parseDouble(json.get("columnWidthEnabled").toString()),
+                        Double.parseDouble(json.get("columnWidthLastSync").toString())
+                );
+
                 runOnStartup = (boolean) json.get("runOnStartup");
 
                 reader.close();
             } catch (Exception e) {
                 System.out.println("Failed to load configuration. Configuration has been reset.");
                 e.printStackTrace();
-                reset();
                 save();
             }
         }
@@ -51,8 +54,17 @@ public final class ConfigurationHandler implements Loadable {
     @Override
     public void save() {
         JSONObject json = new JSONObject();
-        json.put("width", width);
-        json.put("height", height);
+        json.put("width", layout.getWidth());
+        json.put("height", layout.getHeight());
+        json.put("dividerPosition", layout.getDividerPosition());
+        json.put("columnWidthName", layout.getColumnWidthName());
+        json.put("columnWidthFolderA", layout.getColumnWidthFolderA());
+        json.put("columnWidthFolderB", layout.getColumnWidthFolderB());
+        json.put("columnWidthDirection", layout.getColumnWidthDirection());
+        json.put("columnWidthFrequency", layout.getColumnWidthFrequency());
+        json.put("columnWidthEnabled", layout.getColumnWidthEnabled());
+        json.put("columnWidthLastSync", layout.getColumnWidthLastSync());
+
         json.put("runOnStartup", runOnStartup);
 
         try {

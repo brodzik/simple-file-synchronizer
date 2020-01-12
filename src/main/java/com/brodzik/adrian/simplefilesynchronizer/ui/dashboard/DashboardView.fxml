@@ -3,51 +3,44 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       fx:controller="com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView">
-    <SplitPane dividerPositions="0.75" focusTraversable="true" prefHeight="338.0" prefWidth="640.0"
-               VBox.vgrow="ALWAYS">
-        <TableView fx:id="entryTable" prefWidth="515.0">
+    <SplitPane dividerPositions="0.85" VBox.vgrow="ALWAYS" fx:id="splitPane">
+        <TableView fx:id="entryTable">
             <columns>
-                <TableColumn prefWidth="75.0" text="Id">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="id"/>
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="75.0" text="Name">
+                <TableColumn prefWidth="100" text="Name" reorderable="false" fx:id="tableColumnName">
                     <cellValueFactory>
                         <PropertyValueFactory property="name"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Folder A">
+                <TableColumn prefWidth="200" text="Folder A" reorderable="false" fx:id="tableColumnFolderA">
                     <cellValueFactory>
                         <PropertyValueFactory property="folderA"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Folder B">
+                <TableColumn prefWidth="200" text="Folder B" reorderable="false" fx:id="tableColumnFolderB">
                     <cellValueFactory>
                         <PropertyValueFactory property="folderB"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Direction" fx:id="tableColumnDirection"
-                             style="-fx-alignment: CENTER;"/>
-                <TableColumn prefWidth="75.0" text="Frequency">
+                <TableColumn prefWidth="70" text="Direction" fx:id="tableColumnDirection"
+                             style="-fx-alignment: CENTER;" reorderable="false"/>
+                <TableColumn prefWidth="100" text="Frequency" reorderable="false" fx:id="tableColumnFrequency">
                     <cellValueFactory>
                         <PropertyValueFactory property="frequency"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Enabled" fx:id="tableColumnEnabled" style="-fx-alignment: CENTER;"/>
-                <TableColumn prefWidth="125.0" text="Last Sync" fx:id="tableColumnLastSync"
-                             style="-fx-alignment: CENTER;"/>
+                <TableColumn prefWidth="70" text="Enabled" fx:id="tableColumnEnabled" style="-fx-alignment: CENTER;"
+                             reorderable="false"/>
+                <TableColumn prefWidth="125" text="Last Sync" fx:id="tableColumnLastSync"
+                             style="-fx-alignment: CENTER;" reorderable="false"/>
             </columns>
         </TableView>
-        <VBox prefWidth="100.0">
+        <VBox>
             <Button mnemonicParsing="false" prefWidth="Infinity" text="New" onAction="#newEntry">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
@@ -93,8 +86,4 @@
             </Button>
         </VBox>
     </SplitPane>
-    <AnchorPane>
-        <ProgressBar prefHeight="20.0" prefWidth="640.0" progress="0.0" AnchorPane.bottomAnchor="0.0"
-                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-    </AnchorPane>
 </VBox>

@@ -2,6 +2,7 @@ package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 
 import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
+import com.brodzik.adrian.simplefilesynchronizer.handler.ConfigurationHandler;
 import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -11,6 +12,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -22,10 +24,25 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
     private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @FXML
+    private SplitPane splitPane;
+
+    @FXML
     private TableView<Entry> entryTable;
 
     @FXML
+    private TableColumn<Entry, String> tableColumnName;
+
+    @FXML
+    private TableColumn<Entry, String> tableColumnFolderA;
+
+    @FXML
+    private TableColumn<Entry, String> tableColumnFolderB;
+
+    @FXML
     private TableColumn<Entry, String> tableColumnDirection;
+
+    @FXML
+    private TableColumn<Entry, String> tableColumnFrequency;
 
     @FXML
     private TableColumn<Entry, String> tableColumnEnabled;
@@ -60,6 +77,24 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
             });
             return row;
         });
+
+        splitPane.getDividers().stream().findFirst().ifPresent(divider -> divider.positionProperty().bindBidirectional(ConfigurationHandler.INSTANCE.layout.dividerPositionProperty()));
+
+        tableColumnName.setPrefWidth(ConfigurationHandler.INSTANCE.layout.getColumnWidthName());
+        tableColumnFolderA.setPrefWidth(ConfigurationHandler.INSTANCE.layout.getColumnWidthFolderA());
+        tableColumnFolderB.setPrefWidth(ConfigurationHandler.INSTANCE.layout.getColumnWidthFolderB());
+        tableColumnDirection.setPrefWidth(ConfigurationHandler.INSTANCE.layout.getColumnWidthDirection());
+        tableColumnFrequency.setPrefWidth(ConfigurationHandler.INSTANCE.layout.getColumnWidthFrequency());
+        tableColumnEnabled.setPrefWidth(ConfigurationHandler.INSTANCE.layout.getColumnWidthEnabled());
+        tableColumnLastSync.setPrefWidth(ConfigurationHandler.INSTANCE.layout.getColumnWidthLastSync());
+
+        tableColumnName.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setColumnWidthName(tableColumnName.getWidth()));
+        tableColumnFolderA.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setColumnWidthFolderA(tableColumnFolderA.getWidth()));
+        tableColumnFolderB.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setColumnWidthFolderB(tableColumnFolderB.getWidth()));
+        tableColumnDirection.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setColumnWidthDirection(tableColumnDirection.getWidth()));
+        tableColumnFrequency.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setColumnWidthFrequency(tableColumnFrequency.getWidth()));
+        tableColumnEnabled.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setColumnWidthEnabled(tableColumnEnabled.getWidth()));
+        tableColumnLastSync.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setColumnWidthLastSync(tableColumnLastSync.getWidth()));
 
         tableColumnDirection.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDirection().getSymbol()));
         tableColumnEnabled.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isEnabled() ? "Yes" : "No"));

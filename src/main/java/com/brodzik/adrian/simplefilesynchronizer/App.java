@@ -63,15 +63,6 @@ public class App extends Application {
         EntryHandler.INSTANCE.load();
         SyncHandler.INSTANCE.load();
 
-        ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
-        stage.setWidth(ConfigurationHandler.INSTANCE.width);
-        stage.setHeight(ConfigurationHandler.INSTANCE.height);
-        stage.setScene(new Scene(about.getView()));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
-        stage.setTitle(Constants.DASHBOARD_TITLE);
-        stage.show();
-
-
         Platform.setImplicitExit(false);
 
         if (SystemTray.isSupported()) {
@@ -79,13 +70,21 @@ public class App extends Application {
         } else {
             System.out.println("SystemTray is not supported.");
         }
+
+        stage.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setWidth(stage.getWidth()));
+        stage.heightProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setHeight(stage.getHeight()));
+
+        ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
+        stage.setWidth(ConfigurationHandler.INSTANCE.layout.getWidth());
+        stage.setHeight(ConfigurationHandler.INSTANCE.layout.getHeight());
+        stage.setScene(new Scene(about.getView()));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+        stage.setTitle(Constants.DASHBOARD_TITLE);
+        stage.show();
     }
 
     @Override
     public void stop() throws Exception {
-        ConfigurationHandler.INSTANCE.width = App.primaryStage.getWidth();
-        ConfigurationHandler.INSTANCE.height = App.primaryStage.getHeight();
-
         ConfigurationHandler.INSTANCE.save();
         EntryHandler.INSTANCE.save();
         SyncHandler.INSTANCE.save();
