@@ -45,6 +45,8 @@ public final class EntryHandler implements Loadable, Listenable {
     }
 
     public void remove(Entry entry) {
+        SyncHandler.INSTANCE.fileList.remove(entry.getFolderA());
+        SyncHandler.INSTANCE.fileList.remove(entry.getFolderB());
         entries.stream().filter(e -> e.getId() == entry.getId()).findFirst().ifPresent(entries::remove);
         callListeners();
     }

@@ -3,6 +3,7 @@ package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
+import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
@@ -87,15 +88,13 @@ public class DashboardViewModel implements ViewModel {
 
             if (alert.getResult() == ButtonType.YES) {
                 EntryHandler.INSTANCE.remove(getSelectedEntry());
-                // TODO: remove from fileList
             }
         }
     }
 
     public void syncSelectedEntry() {
         if (getSelectedEntry() != null) {
-            // TODO
-            //SyncHandler.INSTANCE.sync(Paths.get(getSelectedEntry().getFolderA()), Paths.get(getSelectedEntry().getFolderB()));
+            SyncHandler.INSTANCE.sync(getSelectedEntry());
         }
     }
 

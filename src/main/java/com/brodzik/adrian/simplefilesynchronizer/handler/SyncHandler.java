@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public final class SyncHandler implements Loadable {
     public static final SyncHandler INSTANCE = new SyncHandler();
 
-    public Map<String, List<String>> fileList = new HashMap<>();
+    public final Map<String, List<String>> fileList = new HashMap<>();
 
     private SyncHandler() {
     }
@@ -46,7 +46,6 @@ public final class SyncHandler implements Loadable {
                 return;
             }
 
-            // TODO: check if folders are present
             Path pathA = Paths.get(entry.getFolderA());
             Path pathB = Paths.get(entry.getFolderB());
 
