@@ -55,7 +55,7 @@ public final class SyncHandler {
     public void syncAll() {
         for (Entry entry : EntryHandler.INSTANCE.getEntries()) {
             System.out.println("Syncing: " + entry.getName());
-            sync(Paths.get(entry.getSource()), Paths.get(entry.getDestination()));
+            sync(Paths.get(entry.getFolderA()), Paths.get(entry.getFolderB()));
         }
     }
 

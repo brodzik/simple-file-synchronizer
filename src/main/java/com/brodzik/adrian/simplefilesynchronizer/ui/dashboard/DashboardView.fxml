@@ -17,32 +17,34 @@
             <columns>
                 <TableColumn prefWidth="75.0" text="Id">
                     <cellValueFactory>
-                        <PropertyValueFactory property="Id"/>
+                        <PropertyValueFactory property="id"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="75.0" text="Name">
                     <cellValueFactory>
-                        <PropertyValueFactory property="Name"/>
+                        <PropertyValueFactory property="name"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Source">
+                <TableColumn prefWidth="75.0" text="Folder A">
                     <cellValueFactory>
-                        <PropertyValueFactory property="Source"/>
+                        <PropertyValueFactory property="folderA"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Destination">
+                <TableColumn prefWidth="75.0" text="Folder B">
                     <cellValueFactory>
-                        <PropertyValueFactory property="Destination"/>
+                        <PropertyValueFactory property="folderB"/>
                     </cellValueFactory>
                 </TableColumn>
+                <TableColumn prefWidth="75.0" text="Direction" fx:id="tableColumnDirection"
+                             style="-fx-alignment: CENTER;"/>
                 <TableColumn prefWidth="75.0" text="Frequency">
                     <cellValueFactory>
-                        <PropertyValueFactory property="Frequency"/>
+                        <PropertyValueFactory property="frequency"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="75.0" text="Enabled">
                     <cellValueFactory>
-                        <PropertyValueFactory property="Enabled"/>
+                        <PropertyValueFactory property="enabled"/>
                     </cellValueFactory>
                 </TableColumn>
             </columns>

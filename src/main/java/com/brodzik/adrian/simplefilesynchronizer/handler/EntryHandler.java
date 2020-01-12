@@ -1,6 +1,7 @@
 package com.brodzik.adrian.simplefilesynchronizer.handler;
 
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
+import com.brodzik.adrian.simplefilesynchronizer.data.SyncDirection;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,8 +33,9 @@ public final class EntryHandler implements Loadable {
     public void edit(Entry entry) {
         entries.stream().filter(e -> e.getId() == entry.getId()).findFirst().ifPresent(e -> {
             e.setName(entry.getName());
-            e.setSource(entry.getSource());
-            e.setDestination(entry.getDestination());
+            e.setFolderA(entry.getFolderA());
+            e.setFolderB(entry.getFolderB());
+            e.setDirection(entry.getDirection());
             e.setFrequency(entry.getFrequency());
             e.setEnabled(entry.isEnabled());
             callListeners();
@@ -41,7 +43,7 @@ public final class EntryHandler implements Loadable {
     }
 
     public void remove(Entry entry) {
-        entries.stream().filter(e -> e.getId() == entry.getId()).findFirst().ifPresentOrElse(entries::remove, () -> System.out.println("wtf"));
+        entries.stream().filter(e -> e.getId() == entry.getId()).findFirst().ifPresent(entries::remove);
         callListeners();
     }
 
@@ -72,8 +74,9 @@ public final class EntryHandler implements Loadable {
                     JSONObject o = (JSONObject) object;
                     Entry entry = new Entry(Integer.parseInt(o.get("id").toString()),
                             (String) o.get("name"),
-                            (String) o.get("source"),
-                            (String) o.get("destination"),
+                            (String) o.get("folderA"),
+                            (String) o.get("folderB"),
+                            SyncDirection.valueOf(o.get("direction").toString()),
                             (String) o.get("frequency"),
                             (boolean) o.get("enabled"));
                     entries.add(entry);
@@ -96,8 +99,9 @@ public final class EntryHandler implements Loadable {
             JSONObject object = new JSONObject();
             object.put("id", entry.getId());
             object.put("name", entry.getName());
-            object.put("source", entry.getSource());
-            object.put("destination", entry.getDestination());
+            object.put("folderA", entry.getFolderA());
+            object.put("folderB", entry.getFolderB());
+            object.put("direction", entry.getDirection().toString());
             object.put("frequency", entry.getFrequency());
             object.put("enabled", entry.isEnabled());
 

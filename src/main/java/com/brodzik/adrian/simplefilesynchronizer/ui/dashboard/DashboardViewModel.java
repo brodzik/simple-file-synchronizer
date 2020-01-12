@@ -28,8 +28,9 @@ import java.util.List;
 public class DashboardViewModel implements ViewModel {
     private final ObservableList<Entry> entries = FXCollections.observableArrayList(entry -> new Observable[]{
             entry.nameProperty(),
-            entry.sourceProperty(),
-            entry.destinationProperty(),
+            entry.folderAProperty(),
+            entry.folderBProperty(),
+            entry.directionProperty(),
             entry.frequencyProperty(),
             entry.enabledProperty()
     });
@@ -49,12 +50,13 @@ public class DashboardViewModel implements ViewModel {
     public void addNewEntry() {
         ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
         entry.getViewModel().setMode(EntryViewModel.Mode.ADD);
-        entry.getCodeBehind().bindTextFields();
+        entry.getCodeBehind().bindInputs();
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(App.primaryStage);
         stage.setScene(new Scene(entry.getView()));
+        stage.setResizable(false);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
         stage.setTitle(Constants.ENTRY_NEW_TITLE);
         stage.show();
@@ -65,12 +67,13 @@ public class DashboardViewModel implements ViewModel {
             ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
             entry.getViewModel().setMode(EntryViewModel.Mode.EDIT);
             entry.getViewModel().entryProperty().set(new Entry(getSelectedEntry()));
-            entry.getCodeBehind().bindTextFields();
+            entry.getCodeBehind().bindInputs();
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(App.primaryStage);
             stage.setScene(new Scene(entry.getView()));
+            stage.setResizable(false);
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
             stage.setTitle(Constants.ENTRY_EDIT_TITLE);
             stage.show();
@@ -92,7 +95,7 @@ public class DashboardViewModel implements ViewModel {
 
     public void syncSelectedEntry() {
         if (getSelectedEntry() != null) {
-            SyncHandler.INSTANCE.sync(Paths.get(getSelectedEntry().getSource()), Paths.get(getSelectedEntry().getDestination()));
+            SyncHandler.INSTANCE.sync(Paths.get(getSelectedEntry().getFolderA()), Paths.get(getSelectedEntry().getFolderB()));
         }
     }
 

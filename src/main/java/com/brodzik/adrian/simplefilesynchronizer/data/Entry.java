@@ -2,30 +2,34 @@ package com.brodzik.adrian.simplefilesynchronizer.data;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Entry {
     private final IntegerProperty id;
     private final StringProperty name;
-    private final StringProperty source;
-    private final StringProperty destination;
+    private final StringProperty folderA;
+    private final StringProperty folderB;
+    private final ObjectProperty<SyncDirection> direction;
     private final StringProperty frequency;
     private final BooleanProperty enabled;
 
-    public Entry(int id, String name, String source, String destination, String frequency, boolean enabled) {
+    public Entry(int id, String name, String folderA, String folderB, SyncDirection direction, String frequency, boolean enabled) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
-        this.source = new SimpleStringProperty(source);
-        this.destination = new SimpleStringProperty(destination);
+        this.folderA = new SimpleStringProperty(folderA);
+        this.folderB = new SimpleStringProperty(folderB);
+        this.direction = new SimpleObjectProperty<>(direction);
         this.frequency = new SimpleStringProperty(frequency);
         this.enabled = new SimpleBooleanProperty(enabled);
     }
 
     public Entry(Entry entry) {
-        this(entry.getId(), entry.getName(), entry.getSource(), entry.getDestination(), entry.getFrequency(), entry.isEnabled());
+        this(entry.getId(), entry.getName(), entry.getFolderA(), entry.getFolderB(), entry.getDirection(), entry.getFrequency(), entry.isEnabled());
     }
 
     public int getId() {
@@ -52,28 +56,40 @@ public class Entry {
         return name;
     }
 
-    public String getSource() {
-        return source.get();
+    public String getFolderA() {
+        return folderA.get();
     }
 
-    public void setSource(String source) {
-        this.source.set(source);
+    public void setFolderA(String folderA) {
+        this.folderA.set(folderA);
     }
 
-    public StringProperty sourceProperty() {
-        return source;
+    public StringProperty folderAProperty() {
+        return folderA;
     }
 
-    public String getDestination() {
-        return destination.get();
+    public String getFolderB() {
+        return folderB.get();
     }
 
-    public void setDestination(String destination) {
-        this.destination.set(destination);
+    public void setFolderB(String folderB) {
+        this.folderB.set(folderB);
     }
 
-    public StringProperty destinationProperty() {
-        return destination;
+    public StringProperty folderBProperty() {
+        return folderB;
+    }
+
+    public SyncDirection getDirection() {
+        return direction.get();
+    }
+
+    public void setDirection(SyncDirection direction) {
+        this.direction.set(direction);
+    }
+
+    public ObjectProperty<SyncDirection> directionProperty() {
+        return direction;
     }
 
     public String getFrequency() {

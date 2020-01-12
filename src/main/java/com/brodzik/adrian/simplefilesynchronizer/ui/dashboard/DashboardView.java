@@ -8,15 +8,19 @@ import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 public class DashboardView implements FxmlView<DashboardViewModel> {
-
     @FXML
     private TableView<Entry> entryTable;
+
+    @FXML
+    private TableColumn<Entry, String> tableColumnDirection;
 
     @FXML
     private Button buttonEditEntry;
@@ -45,6 +49,9 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
             });
             return row;
         });
+
+        tableColumnDirection.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDirection().getSymbol()));
+
         buttonEditEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonRemoveEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonSync.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
