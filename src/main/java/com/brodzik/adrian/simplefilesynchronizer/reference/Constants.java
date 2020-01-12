@@ -13,4 +13,5 @@ public final class Constants {
     public static final String HOME_DIR = System.getProperty("user.home");
     public static final Path APP_DIR = Paths.get(Constants.HOME_DIR, ".simplefilesynchronizer");
     public static final Path CONFIG_FILE = Paths.get(Constants.APP_DIR.toString(), "config.json");
+    public static final Path ENTRIES_FILE = Paths.get(Constants.APP_DIR.toString(), "entries.json");
 }

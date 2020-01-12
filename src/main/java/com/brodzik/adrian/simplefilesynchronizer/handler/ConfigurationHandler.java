@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
 
-public final class ConfigurationHandler {
+public final class ConfigurationHandler implements Loadable {
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
 
     public double width;
@@ -27,6 +27,7 @@ public final class ConfigurationHandler {
         runOnStartup = false;
     }
 
+    @Override
     public void load() {
         if (Files.exists(Constants.CONFIG_FILE)) {
             try {
@@ -49,6 +50,7 @@ public final class ConfigurationHandler {
         }
     }
 
+    @Override
     public void save() {
         JSONObject json = new JSONObject();
         json.put("width", width);

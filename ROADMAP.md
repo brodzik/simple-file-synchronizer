@@ -4,7 +4,7 @@
 - [ ] remove entry confirmation ui
 - [x] edit entry ui
 ---
-- [ ] save/load entries
+- [x] save/load entries
 - [x] save/load configuration
 - [ ] save/load file hashes
 ---
