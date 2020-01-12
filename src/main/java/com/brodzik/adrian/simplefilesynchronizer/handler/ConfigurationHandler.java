@@ -16,9 +16,6 @@ public final class ConfigurationHandler implements Loadable {
     public boolean runOnStartup;
 
     private ConfigurationHandler() {
-        if (Constants.APP_DIR.toFile().mkdirs()) {
-            System.out.println("Created app directory: " + Constants.APP_DIR.toString());
-        }
     }
 
     public void reset() {

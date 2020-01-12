@@ -22,6 +22,9 @@ import java.awt.*;
 public class App extends Application {
     public static Stage primaryStage;
 
+    private SystemTray tray;
+    private TrayIcon trayIcon;
+
     public static void main(String[] args) {
         boolean alreadyRunning;
 
@@ -51,6 +54,10 @@ public class App extends Application {
     public void start(Stage stage) {
         App.primaryStage = stage;
 
+        if (Constants.APP_DIR.toFile().mkdirs()) {
+            System.out.println("Created app directory: " + Constants.APP_DIR.toString());
+        }
+
         ConfigurationHandler.INSTANCE.load();
         EntryHandler.INSTANCE.load();
 
@@ -58,10 +65,10 @@ public class App extends Application {
         stage.setWidth(ConfigurationHandler.INSTANCE.width);
         stage.setHeight(ConfigurationHandler.INSTANCE.height);
         stage.setScene(new Scene(about.getView()));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
         stage.setTitle(Constants.DASHBOARD_TITLE);
         stage.show();
 
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
 
         Platform.setImplicitExit(false);
 
@@ -74,34 +81,26 @@ public class App extends Application {
         ConfigurationHandler.INSTANCE.height = App.primaryStage.getHeight();
         ConfigurationHandler.INSTANCE.save();
         EntryHandler.INSTANCE.save();
+        SwingUtilities.invokeLater(() -> tray.remove(trayIcon));
         super.stop();
     }
 
     private void addTrayIcon() {
         try {
             PopupMenu popup = new PopupMenu();
-            TrayIcon trayIcon = new TrayIcon(ImageIO.read(getClass().getResourceAsStream("/icon.png")));
+            trayIcon = new TrayIcon(ImageIO.read(getClass().getResourceAsStream("/icon.png")));
             trayIcon.setImageAutoSize(true);
-            SystemTray tray = SystemTray.getSystemTray();
+            tray = SystemTray.getSystemTray();
 
             CheckboxMenuItem runOnStartupItem = new CheckboxMenuItem("Run on startup");
             runOnStartupItem.setState(ConfigurationHandler.INSTANCE.runOnStartup);
             runOnStartupItem.addItemListener(itemEvent -> ConfigurationHandler.INSTANCE.runOnStartup = runOnStartupItem.getState());
 
             MenuItem exitItem = new MenuItem("Exit");
-            exitItem.addActionListener(actionEvent -> {
-                Platform.exit();
-                tray.remove(trayIcon);
-            });
+            exitItem.addActionListener(actionEvent -> Platform.exit());
 
             trayIcon.addActionListener(actionEvent -> Platform.runLater(() -> App.primaryStage.show()));
             trayIcon.setToolTip(Constants.APP_NAME);
-
-            App.primaryStage.setOnCloseRequest(windowEvent -> {
-                if (Platform.isImplicitExit()) {
-                    tray.remove(trayIcon);
-                }
-            });
 
             popup.add(runOnStartupItem);
             popup.add(exitItem);

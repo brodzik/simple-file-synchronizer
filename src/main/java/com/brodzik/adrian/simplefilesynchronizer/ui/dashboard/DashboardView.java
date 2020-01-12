@@ -4,6 +4,7 @@ import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -80,5 +81,10 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
     private void editSettings() {
+    }
+
+    @FXML
+    private void exit() {
+        Platform.exit();
     }
 }

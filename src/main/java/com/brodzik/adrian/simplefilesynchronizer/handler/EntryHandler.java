@@ -81,7 +81,7 @@ public final class EntryHandler implements Loadable {
 
                 reader.close();
             } catch (Exception e) {
-                System.out.println("Failed to load configuration. Configuration has been reset.");
+                System.out.println("Failed to load entries.");
                 e.printStackTrace();
                 save();
             }

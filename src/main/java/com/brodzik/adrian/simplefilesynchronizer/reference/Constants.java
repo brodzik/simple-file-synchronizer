@@ -8,7 +8,9 @@ public final class Constants {
     public static final String MESSAGE_SHOW = "SHOW";
 
     public static final String APP_NAME = "Simple File Synchronizer";
-    public static final String DASHBOARD_TITLE = String.format("%s - Dashboard", Constants.APP_NAME);
+    public static final String DASHBOARD_TITLE = Constants.APP_NAME;
+    public static final String ENTRY_NEW_TITLE = "New entry";
+    public static final String ENTRY_EDIT_TITLE = "Edit entry";
 
     public static final String HOME_DIR = System.getProperty("user.home");
     public static final Path APP_DIR = Paths.get(Constants.HOME_DIR, ".simplefilesynchronizer");

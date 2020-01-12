@@ -6,7 +6,6 @@
 ---
 - [x] save/load entries
 - [x] save/load configuration
-- [ ] save/load file hashes
 ---
 - [x] manual sync button
 - [ ] automatic sync

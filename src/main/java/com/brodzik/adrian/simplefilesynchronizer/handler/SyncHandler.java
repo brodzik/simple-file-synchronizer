@@ -23,9 +23,6 @@ public final class SyncHandler {
             HashMap<String, String> srcFiles = getFiles(src);
             HashMap<String, String> destFiles = getFiles(dest);
 
-            System.out.println(srcFiles);
-            System.out.println(destFiles);
-
             srcFiles.forEach((relativePath, hash) -> {
                 if (hash.equals(destFiles.get(relativePath))) {
                     System.out.println("File is up-to-date: " + relativePath);

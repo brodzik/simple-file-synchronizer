@@ -3,6 +3,7 @@ package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
+import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
@@ -14,6 +15,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -49,6 +51,8 @@ public class DashboardViewModel implements ViewModel {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(App.primaryStage);
         stage.setScene(new Scene(entry.getView()));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+        stage.setTitle(Constants.ENTRY_NEW_TITLE);
         stage.show();
     }
 
@@ -62,7 +66,8 @@ public class DashboardViewModel implements ViewModel {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(App.primaryStage);
         stage.setScene(new Scene(entry.getView()));
-
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+        stage.setTitle(Constants.ENTRY_EDIT_TITLE);
         stage.show();
     }
 
