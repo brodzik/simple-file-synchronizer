@@ -151,10 +151,9 @@ public class EntryView implements FxmlView<EntryViewModel> {
                 EntryHandler.INSTANCE.add(viewModel.getEntry());
                 break;
             case EDIT:
-                EntryHandler.INSTANCE.edit(viewModel.getEntry());
+                EntryHandler.INSTANCE.update(viewModel.getEntry());
                 break;
         }
-
 
         close();
     }

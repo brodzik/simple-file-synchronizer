@@ -3,7 +3,6 @@ package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
-import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
@@ -22,7 +21,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.nio.file.Paths;
 import java.util.List;
 
 public class DashboardViewModel implements ViewModel {
@@ -32,7 +30,8 @@ public class DashboardViewModel implements ViewModel {
             entry.folderBProperty(),
             entry.directionProperty(),
             entry.frequencyProperty(),
-            entry.enabledProperty()
+            entry.enabledProperty(),
+            entry.lastSyncProperty()
     });
     private final ObjectProperty<Entry> selectedEntry = new SimpleObjectProperty<>();
 
@@ -88,14 +87,15 @@ public class DashboardViewModel implements ViewModel {
 
             if (alert.getResult() == ButtonType.YES) {
                 EntryHandler.INSTANCE.remove(getSelectedEntry());
-                updateEntryList();
+                // TODO: remove from fileList
             }
         }
     }
 
     public void syncSelectedEntry() {
         if (getSelectedEntry() != null) {
-            SyncHandler.INSTANCE.sync(Paths.get(getSelectedEntry().getFolderA()), Paths.get(getSelectedEntry().getFolderB()));
+            // TODO
+            //SyncHandler.INSTANCE.sync(Paths.get(getSelectedEntry().getFolderA()), Paths.get(getSelectedEntry().getFolderB()));
         }
     }
 

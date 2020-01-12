@@ -9,7 +9,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="239.0" prefWidth="492.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="239.0" prefWidth="492.0" xmlns="http://javafx.com/javafx/10.0.1"
       fx:controller="com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView">
     <children>
         <HBox prefHeight="100.0" prefWidth="200.0">
@@ -23,7 +23,7 @@
             </Label>
             <TextField fx:id="textFieldName" prefHeight="30.0" prefWidth="318.0" HBox.hgrow="ALWAYS">
                 <HBox.margin>
-                    <Insets/>
+                    <Insets right="10.0"/>
                 </HBox.margin>
             </TextField>
         </HBox>

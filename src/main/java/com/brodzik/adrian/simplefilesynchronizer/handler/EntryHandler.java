@@ -12,9 +12,10 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
-public final class EntryHandler implements Loadable {
+public final class EntryHandler implements Loadable, Listenable {
     public static final EntryHandler INSTANCE = new EntryHandler();
 
     private final ArrayList<Entry> entries = new ArrayList<>();
@@ -30,7 +31,7 @@ public final class EntryHandler implements Loadable {
         callListeners();
     }
 
-    public void edit(Entry entry) {
+    public void update(Entry entry) {
         entries.stream().filter(e -> e.getId() == entry.getId()).findFirst().ifPresent(e -> {
             e.setName(entry.getName());
             e.setFolderA(entry.getFolderA());
@@ -38,6 +39,7 @@ public final class EntryHandler implements Loadable {
             e.setDirection(entry.getDirection());
             e.setFrequency(entry.getFrequency());
             e.setEnabled(entry.isEnabled());
+            e.setLastSync(entry.getLastSync());
             callListeners();
         });
     }
@@ -47,18 +49,19 @@ public final class EntryHandler implements Loadable {
         callListeners();
     }
 
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(entries);
+    public final List<Entry> getEntries() {
+        List<Entry> copy = new ArrayList<>();
+        entries.forEach(entry -> copy.add(new Entry(entry)));
+        return Collections.unmodifiableList(copy);
     }
 
+    @Override
     public void addListener(Listener listener) {
         listeners.add(listener);
     }
 
     private void callListeners() {
-        for (Listener listener : listeners) {
-            listener.onChanged();
-        }
+        listeners.forEach(Listener::onUpdate);
     }
 
     @Override
@@ -78,7 +81,8 @@ public final class EntryHandler implements Loadable {
                             (String) o.get("folderB"),
                             SyncDirection.valueOf(o.get("direction").toString()),
                             (String) o.get("frequency"),
-                            (boolean) o.get("enabled"));
+                            (boolean) o.get("enabled"),
+                            new Date(Long.parseLong(o.get("lastSync").toString())));
                     entries.add(entry);
                 }
 
@@ -104,6 +108,7 @@ public final class EntryHandler implements Loadable {
             object.put("direction", entry.getDirection().toString());
             object.put("frequency", entry.getFrequency());
             object.put("enabled", entry.isEnabled());
+            object.put("lastSync", entry.getLastSync().getTime());
 
             array.add(object);
         }
@@ -117,9 +122,5 @@ public final class EntryHandler implements Loadable {
         }
 
         System.out.println("Entries saved.");
-    }
-
-    public interface Listener {
-        void onChanged();
     }
 }

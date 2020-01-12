@@ -16,6 +16,7 @@ public final class ConfigurationHandler implements Loadable {
     public boolean runOnStartup;
 
     private ConfigurationHandler() {
+        reset();
     }
 
     public void reset() {

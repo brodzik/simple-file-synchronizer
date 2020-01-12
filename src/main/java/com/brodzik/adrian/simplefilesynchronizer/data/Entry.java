@@ -9,6 +9,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Date;
+
 public class Entry {
     private final IntegerProperty id;
     private final StringProperty name;
@@ -17,8 +19,9 @@ public class Entry {
     private final ObjectProperty<SyncDirection> direction;
     private final StringProperty frequency;
     private final BooleanProperty enabled;
+    private final ObjectProperty<Date> lastSync;
 
-    public Entry(int id, String name, String folderA, String folderB, SyncDirection direction, String frequency, boolean enabled) {
+    public Entry(int id, String name, String folderA, String folderB, SyncDirection direction, String frequency, boolean enabled, Date lastSync) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.folderA = new SimpleStringProperty(folderA);
@@ -26,10 +29,11 @@ public class Entry {
         this.direction = new SimpleObjectProperty<>(direction);
         this.frequency = new SimpleStringProperty(frequency);
         this.enabled = new SimpleBooleanProperty(enabled);
+        this.lastSync = new SimpleObjectProperty<>(lastSync);
     }
 
     public Entry(Entry entry) {
-        this(entry.getId(), entry.getName(), entry.getFolderA(), entry.getFolderB(), entry.getDirection(), entry.getFrequency(), entry.isEnabled());
+        this(entry.getId(), entry.getName(), entry.getFolderA(), entry.getFolderB(), entry.getDirection(), entry.getFrequency(), entry.isEnabled(), entry.getLastSync());
     }
 
     public int getId() {
@@ -114,5 +118,17 @@ public class Entry {
 
     public BooleanProperty enabledProperty() {
         return enabled;
+    }
+
+    public Date getLastSync() {
+        return lastSync.get();
+    }
+
+    public void setLastSync(Date lastSync) {
+        this.lastSync.set(lastSync);
+    }
+
+    public ObjectProperty<Date> lastSyncProperty() {
+        return lastSync;
     }
 }

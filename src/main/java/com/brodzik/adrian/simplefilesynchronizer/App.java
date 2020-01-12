@@ -2,6 +2,7 @@ package com.brodzik.adrian.simplefilesynchronizer;
 
 import com.brodzik.adrian.simplefilesynchronizer.handler.ConfigurationHandler;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
+import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardView;
 import com.brodzik.adrian.simplefilesynchronizer.ui.dashboard.DashboardViewModel;
@@ -60,6 +61,7 @@ public class App extends Application {
 
         ConfigurationHandler.INSTANCE.load();
         EntryHandler.INSTANCE.load();
+        SyncHandler.INSTANCE.load();
 
         ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
         stage.setWidth(ConfigurationHandler.INSTANCE.width);
@@ -83,8 +85,10 @@ public class App extends Application {
     public void stop() throws Exception {
         ConfigurationHandler.INSTANCE.width = App.primaryStage.getWidth();
         ConfigurationHandler.INSTANCE.height = App.primaryStage.getHeight();
+
         ConfigurationHandler.INSTANCE.save();
         EntryHandler.INSTANCE.save();
+        SyncHandler.INSTANCE.save();
 
         if (SystemTray.isSupported()) {
             SwingUtilities.invokeLater(() -> tray.remove(trayIcon));

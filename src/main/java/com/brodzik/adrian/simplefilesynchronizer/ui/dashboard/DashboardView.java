@@ -15,7 +15,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class DashboardView implements FxmlView<DashboardViewModel> {
+    private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
     @FXML
     private TableView<Entry> entryTable;
 
@@ -24,6 +29,9 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
     private TableColumn<Entry, String> tableColumnEnabled;
+
+    @FXML
+    private TableColumn<Entry, String> tableColumnLastSync;
 
     @FXML
     private Button buttonEditEntry;
@@ -55,6 +63,7 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
         tableColumnDirection.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDirection().getSymbol()));
         tableColumnEnabled.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isEnabled() ? "Yes" : "No"));
+        tableColumnLastSync.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getLastSync().getTime() == 0 ? "Never" : DashboardView.DATETIME_FORMAT.format(data.getValue().getLastSync())));
 
         buttonEditEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonRemoveEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));

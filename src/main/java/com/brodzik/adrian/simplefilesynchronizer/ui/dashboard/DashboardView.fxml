@@ -42,11 +42,9 @@
                         <PropertyValueFactory property="frequency"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Enabled" fx:id="tableColumnEnabled" style="-fx-alignment: CENTER;">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="enabled"/>
-                    </cellValueFactory>
-                </TableColumn>
+                <TableColumn prefWidth="75.0" text="Enabled" fx:id="tableColumnEnabled" style="-fx-alignment: CENTER;"/>
+                <TableColumn prefWidth="125.0" text="Last Sync" fx:id="tableColumnLastSync"
+                             style="-fx-alignment: CENTER;"/>
             </columns>
         </TableView>
         <VBox prefWidth="100.0">

@@ -14,7 +14,6 @@
         <option value="unqualifiedStaticMemberAccess" />
         <option value="missingOverrideAnnotation" />
         <option value="useBlocks" />
-        <option value="generateSerialVersionUID" />
         <option value="unnecessaryThis" />
         <option value="finalPrivateMethod" />
         <option value="unnecessaryFinalOnLocalVariableOrParameter" />

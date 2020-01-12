@@ -6,12 +6,14 @@ import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+import java.util.Date;
+
 public class EntryViewModel implements ViewModel {
     private final ObjectProperty<Entry> entry = new SimpleObjectProperty<>();
     private Mode mode = Mode.ADD;
 
     public EntryViewModel() {
-        entry.set(new Entry(0, "", "", "", SyncDirection.UNIDIRECTIONAL_1, "", true));
+        entry.set(new Entry(0, "", "", "", SyncDirection.UNIDIRECTIONAL_1, "", true, new Date(0)));
     }
 
     public Entry getEntry() {
