@@ -42,7 +42,7 @@
                         <PropertyValueFactory property="frequency"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Enabled">
+                <TableColumn prefWidth="75.0" text="Enabled" fx:id="tableColumnEnabled" style="-fx-alignment: CENTER;">
                     <cellValueFactory>
                         <PropertyValueFactory property="enabled"/>
                     </cellValueFactory>

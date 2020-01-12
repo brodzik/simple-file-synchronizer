@@ -10,7 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -30,6 +32,15 @@ public class EntryView implements FxmlView<EntryViewModel> {
 
     @FXML
     private ComboBox<SyncDirection> comboBoxDirection;
+
+    @FXML
+    private ToggleGroup toggleEnabled;
+
+    @FXML
+    private RadioButton radioButtonEnable;
+
+    @FXML
+    private RadioButton radioButtonDisable;
 
     @FXML
     private Button buttonCancel;
@@ -63,6 +74,18 @@ public class EntryView implements FxmlView<EntryViewModel> {
         textFieldFolderA.textProperty().bindBidirectional(viewModel.getEntry().folderAProperty());
         textFieldFolderB.textProperty().bindBidirectional(viewModel.getEntry().folderBProperty());
         comboBoxDirection.valueProperty().bindBidirectional(viewModel.getEntry().directionProperty());
+        toggleEnabled.selectedToggleProperty().addListener(observable -> {
+            RadioButton rb = (RadioButton) toggleEnabled.getSelectedToggle();
+
+            if (rb != null) {
+                if (rb == radioButtonEnable) {
+                    viewModel.getEntry().setEnabled(true);
+                } else if (rb == radioButtonDisable) {
+                    viewModel.getEntry().setEnabled(false);
+                }
+            }
+        });
+        toggleEnabled.selectToggle(viewModel.getEntry().isEnabled() ? radioButtonEnable : radioButtonDisable);
     }
 
     @FXML

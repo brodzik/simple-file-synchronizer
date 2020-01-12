@@ -23,6 +23,9 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
     private TableColumn<Entry, String> tableColumnDirection;
 
     @FXML
+    private TableColumn<Entry, String> tableColumnEnabled;
+
+    @FXML
     private Button buttonEditEntry;
 
     @FXML
@@ -51,6 +54,7 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
         });
 
         tableColumnDirection.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDirection().getSymbol()));
+        tableColumnEnabled.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isEnabled() ? "Yes" : "No"));
 
         buttonEditEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonRemoveEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
