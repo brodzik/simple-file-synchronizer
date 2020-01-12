@@ -1,7 +1,7 @@
 # Roadmap
 - [x] dashboard ui
 - [x] add entry ui
-- [ ] remove entry confirmation ui
+- [x] remove entry confirmation ui
 - [x] edit entry ui
 ---
 - [x] save/load entries

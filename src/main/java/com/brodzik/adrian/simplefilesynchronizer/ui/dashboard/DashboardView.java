@@ -1,5 +1,6 @@
 package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 
+import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import de.saxsys.mvvmfx.FxmlView;
@@ -81,6 +82,11 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
     private void editSettings() {
+    }
+
+    @FXML
+    private void minimizeToTray() {
+        App.primaryStage.hide();
     }
 
     @FXML

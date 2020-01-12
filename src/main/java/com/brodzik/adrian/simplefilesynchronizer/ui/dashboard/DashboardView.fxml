@@ -81,6 +81,11 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="40.0"/>
                 </VBox.margin>
             </Button>
+            <Button mnemonicParsing="false" prefWidth="Infinity" text="Minimize to tray" onAction="#minimizeToTray">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0"/>
+                </VBox.margin>
+            </Button>
             <Button mnemonicParsing="false" prefWidth="Infinity" text="Exit" onAction="#exit">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0"/>

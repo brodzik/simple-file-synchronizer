@@ -15,6 +15,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -73,8 +75,14 @@ public class DashboardViewModel implements ViewModel {
 
     public void removeSelectedEntry() {
         if (selectedEntry.get() != null) {
-            EntryHandler.INSTANCE.remove(getSelectedEntry());
-            updateEntryList();
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to remove this entry?", ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                EntryHandler.INSTANCE.remove(getSelectedEntry());
+                updateEntryList();
+            }
         }
     }
 
