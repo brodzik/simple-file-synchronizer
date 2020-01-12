@@ -72,7 +72,11 @@ public class App extends Application {
 
         Platform.setImplicitExit(false);
 
-        SwingUtilities.invokeLater(this::addTrayIcon);
+        if (SystemTray.isSupported()) {
+            SwingUtilities.invokeLater(this::addTrayIcon);
+        } else {
+            System.out.println("SystemTray is not supported.");
+        }
     }
 
     @Override
@@ -81,7 +85,11 @@ public class App extends Application {
         ConfigurationHandler.INSTANCE.height = App.primaryStage.getHeight();
         ConfigurationHandler.INSTANCE.save();
         EntryHandler.INSTANCE.save();
-        SwingUtilities.invokeLater(() -> tray.remove(trayIcon));
+
+        if (SystemTray.isSupported()) {
+            SwingUtilities.invokeLater(() -> tray.remove(trayIcon));
+        }
+
         super.stop();
     }
 
