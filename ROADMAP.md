@@ -9,12 +9,14 @@
 ---
 - [x] manual sync button
 - [x] automatic sync
-- [ ] sync on device connect
 - [x] check source/destination exists
 ---
 - [ ] run on startup
-- [ ] shutdown after sync
 - [ ] unit tests
 - [ ] select folders/files to include/exclude
 - [x] unidirectional sync
-- [ ] bidirectional sync
+- [x] bidirectional sync
+- [ ] save layout settings
+- [ ] clear app cache option
+- [ ] resolve "minimize to tray" option on Linux
+- [ ] connect logger
