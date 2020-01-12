@@ -3,6 +3,7 @@ package com.brodzik.adrian.simplefilesynchronizer.ui.dashboard;
 import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
+import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView;
 import com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryViewModel;
@@ -21,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 public class DashboardViewModel implements ViewModel {
@@ -59,22 +61,24 @@ public class DashboardViewModel implements ViewModel {
     }
 
     public void editSelectedEntry() {
-        ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
-        entry.getViewModel().setMode(EntryViewModel.Mode.EDIT);
-        entry.getViewModel().entryProperty().set(new Entry(getSelectedEntry()));
-        entry.getCodeBehind().bindTextFields();
+        if (getSelectedEntry() != null) {
+            ViewTuple<EntryView, EntryViewModel> entry = FluentViewLoader.fxmlView(EntryView.class).load();
+            entry.getViewModel().setMode(EntryViewModel.Mode.EDIT);
+            entry.getViewModel().entryProperty().set(new Entry(getSelectedEntry()));
+            entry.getCodeBehind().bindTextFields();
 
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(App.primaryStage);
-        stage.setScene(new Scene(entry.getView()));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
-        stage.setTitle(Constants.ENTRY_EDIT_TITLE);
-        stage.show();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(App.primaryStage);
+            stage.setScene(new Scene(entry.getView()));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+            stage.setTitle(Constants.ENTRY_EDIT_TITLE);
+            stage.show();
+        }
     }
 
     public void removeSelectedEntry() {
-        if (selectedEntry.get() != null) {
+        if (getSelectedEntry() != null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to remove this entry?", ButtonType.YES, ButtonType.NO);
             alert.setHeaderText(null);
             alert.showAndWait();
@@ -83,6 +87,12 @@ public class DashboardViewModel implements ViewModel {
                 EntryHandler.INSTANCE.remove(getSelectedEntry());
                 updateEntryList();
             }
+        }
+    }
+
+    public void syncSelectedEntry() {
+        if (getSelectedEntry() != null) {
+            SyncHandler.INSTANCE.sync(Paths.get(getSelectedEntry().getSource()), Paths.get(getSelectedEntry().getDestination()));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.brodzik.adrian.simplefilesynchronizer.handler;
 
+import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.helper.HashHelper;
 
 import java.io.File;
@@ -48,6 +49,13 @@ public final class SyncHandler {
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void syncAll() {
+        for (Entry entry : EntryHandler.INSTANCE.getEntries()) {
+            System.out.println("Syncing: " + entry.getName());
+            sync(Paths.get(entry.getSource()), Paths.get(entry.getDestination()));
         }
     }
 

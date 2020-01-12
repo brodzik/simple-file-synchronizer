@@ -13,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
-import java.nio.file.Paths;
-
 public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
@@ -73,11 +71,12 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
 
     @FXML
     private void sync() {
-        SyncHandler.INSTANCE.sync(Paths.get("C:\\Users\\Adrian\\Desktop\\SRC"), Paths.get("C:\\Users\\Adrian\\Desktop\\DEST"));
+        viewModel.syncSelectedEntry();
     }
 
     @FXML
     private void syncAll() {
+        SyncHandler.INSTANCE.syncAll();
     }
 
     @FXML

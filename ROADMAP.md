@@ -8,7 +8,7 @@
 - [x] save/load configuration
 ---
 - [x] manual sync button
-- [ ] automatic sync
+- [x] automatic sync
 - [ ] sync on device connect
 - [x] check source/destination exists
 ---
