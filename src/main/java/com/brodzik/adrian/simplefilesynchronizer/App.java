@@ -1,5 +1,6 @@
 package com.brodzik.adrian.simplefilesynchronizer;
 
+import com.brodzik.adrian.simplefilesynchronizer.concurrent.BackgroundSynchronizer;
 import com.brodzik.adrian.simplefilesynchronizer.handler.ConfigurationHandler;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
 import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
@@ -23,6 +24,8 @@ import java.awt.*;
 public class App extends Application {
     public static Stage primaryStage;
     public static boolean hasTray;
+
+    private BackgroundSynchronizer backgroundSynchronizer;
 
     private SystemTray tray;
     private TrayIcon trayIcon;
@@ -76,6 +79,9 @@ public class App extends Application {
         stage.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setWidth(stage.getWidth()));
         stage.heightProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setHeight(stage.getHeight()));
 
+        backgroundSynchronizer = new BackgroundSynchronizer();
+        new Thread(backgroundSynchronizer).start();
+
         ViewTuple<DashboardView, DashboardViewModel> about = FluentViewLoader.fxmlView(DashboardView.class).load();
         stage.setWidth(ConfigurationHandler.INSTANCE.layout.getWidth());
         stage.setHeight(ConfigurationHandler.INSTANCE.layout.getHeight());
@@ -87,6 +93,8 @@ public class App extends Application {
 
     @Override
     public void stop() throws Exception {
+        backgroundSynchronizer.stop();
+
         ConfigurationHandler.INSTANCE.save();
         EntryHandler.INSTANCE.save();
         SyncHandler.INSTANCE.save();

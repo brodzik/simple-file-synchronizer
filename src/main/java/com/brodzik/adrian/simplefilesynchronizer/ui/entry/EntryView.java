@@ -4,6 +4,7 @@ import com.brodzik.adrian.simplefilesynchronizer.App;
 import com.brodzik.adrian.simplefilesynchronizer.data.SyncDirection;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
 import com.brodzik.adrian.simplefilesynchronizer.helper.InputHelper;
+import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.fxml.FXML;
@@ -84,8 +85,8 @@ public class EntryView implements FxmlView<EntryViewModel> {
             }
         });
 
-        spinnerFrequency.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0));
-        spinnerFrequency.getEditor().setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, InputHelper.INTEGER_FILTER));
+        spinnerFrequency.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(Constants.SYNC_DELAY_SECONDS, Integer.MAX_VALUE, 0));
+        spinnerFrequency.getEditor().setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), Constants.SYNC_DELAY_SECONDS, InputHelper.INTEGER_FILTER));
     }
 
     public void bindInputs() {
@@ -93,7 +94,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
         textFieldFolderA.textProperty().bindBidirectional(viewModel.getEntry().folderAProperty());
         textFieldFolderB.textProperty().bindBidirectional(viewModel.getEntry().folderBProperty());
         comboBoxDirection.valueProperty().bindBidirectional(viewModel.getEntry().directionProperty());
-        spinnerFrequency.getValueFactory().setValue(viewModel.getEntry().getFrequency() > 0 ? viewModel.getEntry().getFrequency() : 1);
+        spinnerFrequency.getValueFactory().setValue(viewModel.getEntry().getFrequency() > 0 ? viewModel.getEntry().getFrequency() : 3600);
         spinnerFrequency.valueProperty().addListener(observable -> viewModel.getEntry().setFrequency(spinnerFrequency.getValue()));
 
         toggleFrequency.selectedToggleProperty().addListener(observable -> {
@@ -101,7 +102,7 @@ public class EntryView implements FxmlView<EntryViewModel> {
 
             if (rb != null) {
                 if (rb == radioButtonManual) {
-                    spinnerFrequency.getValueFactory().setValue(0);
+                    viewModel.getEntry().setFrequency(0);
                     spinnerFrequency.setDisable(true);
                 } else if (rb == radioButtonAutomatic) {
                     viewModel.getEntry().setFrequency(spinnerFrequency.getValue());

@@ -102,7 +102,7 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
         tableColumnDirection.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDirection().getSymbol()));
         tableColumnEnabled.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isEnabled() ? "Yes" : "No"));
         tableColumnLastSync.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getLastSync().getTime() == 0 ? "Never" : DashboardView.DATETIME_FORMAT.format(data.getValue().getLastSync())));
-        tableColumnFrequency.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFrequency() > 0 ? String.format("every %s minutes", data.getValue().getFrequency()) : "Manual"));
+        tableColumnFrequency.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFrequency() > 0 ? String.format("every %s seconds", data.getValue().getFrequency()) : "Manual"));
 
         buttonEditEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonRemoveEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
@@ -138,10 +138,6 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
     @FXML
     private void syncAll() {
         SyncHandler.INSTANCE.syncAll();
-    }
-
-    @FXML
-    private void editSettings() {
     }
 
     @FXML

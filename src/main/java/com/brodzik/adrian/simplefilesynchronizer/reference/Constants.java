@@ -17,4 +17,6 @@ public final class Constants {
     public static final Path CONFIG_FILE = Paths.get(Constants.APP_DIR.toString(), "config.json");
     public static final Path ENTRIES_FILE = Paths.get(Constants.APP_DIR.toString(), "entries.json");
     public static final Path FILE_LIST_FILE = Paths.get(Constants.APP_DIR.toString(), "fileList.json");
+
+    public static final int SYNC_DELAY_SECONDS = 5;
 }

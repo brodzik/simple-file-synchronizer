@@ -10,7 +10,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="300.0" prefWidth="492.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="300.0" prefWidth="492.0" xmlns="http://javafx.com/javafx/10.0.1"
       fx:controller="com.brodzik.adrian.simplefilesynchronizer.ui.entry.EntryView">
     <HBox prefHeight="100.0" prefWidth="200.0">
         <VBox.margin>
@@ -96,7 +96,7 @@
                 <Insets left="5.0"/>
             </HBox.margin>
         </Spinner>
-        <Label prefHeight="32.0" prefWidth="46.0" text="minutes">
+        <Label prefHeight="32.0" prefWidth="46.0" text="seconds">
             <HBox.margin>
                 <Insets left="5.0"/>
             </HBox.margin>
