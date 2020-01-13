@@ -11,7 +11,6 @@
 - [x] automatic sync
 - [x] check source/destination exists
 ---
-- [ ] run on startup
 - [ ] unit tests
 - [x] unidirectional sync
 - [x] bidirectional sync
@@ -19,4 +18,4 @@
 - [ ] clear app cache option
 - [x] resolve "minimize to tray" option on Linux
 - [ ] connect logger
-- [ ] set frequency and sync automatically
+- [x] set frequency and sync automatically
