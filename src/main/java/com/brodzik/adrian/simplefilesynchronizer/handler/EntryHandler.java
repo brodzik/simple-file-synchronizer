@@ -82,7 +82,7 @@ public final class EntryHandler implements Loadable, Listenable {
                             (String) o.get("folderA"),
                             (String) o.get("folderB"),
                             SyncDirection.valueOf(o.get("direction").toString()),
-                            (String) o.get("frequency"),
+                            Integer.parseInt(o.get("frequency").toString()),
                             (boolean) o.get("enabled"),
                             new Date(Long.parseLong(o.get("lastSync").toString())));
                     entries.add(entry);

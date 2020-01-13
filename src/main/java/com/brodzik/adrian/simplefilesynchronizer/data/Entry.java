@@ -17,17 +17,17 @@ public class Entry {
     private final StringProperty folderA;
     private final StringProperty folderB;
     private final ObjectProperty<SyncDirection> direction;
-    private final StringProperty frequency;
+    private final IntegerProperty frequency;
     private final BooleanProperty enabled;
     private final ObjectProperty<Date> lastSync;
 
-    public Entry(int id, String name, String folderA, String folderB, SyncDirection direction, String frequency, boolean enabled, Date lastSync) {
+    public Entry(int id, String name, String folderA, String folderB, SyncDirection direction, int frequency, boolean enabled, Date lastSync) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.folderA = new SimpleStringProperty(folderA);
         this.folderB = new SimpleStringProperty(folderB);
         this.direction = new SimpleObjectProperty<>(direction);
-        this.frequency = new SimpleStringProperty(frequency);
+        this.frequency = new SimpleIntegerProperty(frequency);
         this.enabled = new SimpleBooleanProperty(enabled);
         this.lastSync = new SimpleObjectProperty<>(lastSync);
     }
@@ -96,15 +96,15 @@ public class Entry {
         return direction;
     }
 
-    public String getFrequency() {
+    public int getFrequency() {
         return frequency.get();
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(int frequency) {
         this.frequency.set(frequency);
     }
 
-    public StringProperty frequencyProperty() {
+    public IntegerProperty frequencyProperty() {
         return frequency;
     }
 

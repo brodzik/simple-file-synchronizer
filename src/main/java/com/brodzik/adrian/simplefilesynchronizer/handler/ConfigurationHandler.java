@@ -12,7 +12,7 @@ import java.nio.file.Files;
 public final class ConfigurationHandler implements Loadable {
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
 
-    public Layout layout = new Layout(1280, 720, 0.85, 100, 200, 200, 70, 100, 70, 125);
+    public Layout layout = new Layout(1280, 720, 0.85, 100, 200, 200, 70, 150, 70, 125);
     public boolean runOnStartup = false;
 
     private ConfigurationHandler() {

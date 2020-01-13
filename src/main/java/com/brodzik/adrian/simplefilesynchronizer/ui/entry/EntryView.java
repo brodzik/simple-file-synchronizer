@@ -11,11 +11,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.File;
 import java.util.Objects;
@@ -32,6 +36,18 @@ public class EntryView implements FxmlView<EntryViewModel> {
 
     @FXML
     private ComboBox<SyncDirection> comboBoxDirection;
+
+    @FXML
+    private ToggleGroup toggleFrequency;
+
+    @FXML
+    private RadioButton radioButtonManual;
+
+    @FXML
+    private RadioButton radioButtonAutomatic;
+
+    @FXML
+    private Spinner<Integer> spinnerFrequency;
 
     @FXML
     private ToggleGroup toggleEnabled;
@@ -67,6 +83,9 @@ public class EntryView implements FxmlView<EntryViewModel> {
                 return null;
             }
         });
+
+        spinnerFrequency.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0));
+        spinnerFrequency.getEditor().setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, InputHelper.INTEGER_FILTER));
     }
 
     public void bindInputs() {
@@ -74,6 +93,24 @@ public class EntryView implements FxmlView<EntryViewModel> {
         textFieldFolderA.textProperty().bindBidirectional(viewModel.getEntry().folderAProperty());
         textFieldFolderB.textProperty().bindBidirectional(viewModel.getEntry().folderBProperty());
         comboBoxDirection.valueProperty().bindBidirectional(viewModel.getEntry().directionProperty());
+        spinnerFrequency.getValueFactory().setValue(viewModel.getEntry().getFrequency() > 0 ? viewModel.getEntry().getFrequency() : 1);
+        spinnerFrequency.valueProperty().addListener(observable -> viewModel.getEntry().setFrequency(spinnerFrequency.getValue()));
+
+        toggleFrequency.selectedToggleProperty().addListener(observable -> {
+            RadioButton rb = (RadioButton) toggleFrequency.getSelectedToggle();
+
+            if (rb != null) {
+                if (rb == radioButtonManual) {
+                    spinnerFrequency.getValueFactory().setValue(0);
+                    spinnerFrequency.setDisable(true);
+                } else if (rb == radioButtonAutomatic) {
+                    viewModel.getEntry().setFrequency(spinnerFrequency.getValue());
+                    spinnerFrequency.setDisable(false);
+                }
+            }
+        });
+        toggleFrequency.selectToggle(viewModel.getEntry().getFrequency() > 0 ? radioButtonAutomatic : radioButtonManual);
+
         toggleEnabled.selectedToggleProperty().addListener(observable -> {
             RadioButton rb = (RadioButton) toggleEnabled.getSelectedToggle();
 

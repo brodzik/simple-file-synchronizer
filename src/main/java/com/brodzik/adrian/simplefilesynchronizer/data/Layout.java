@@ -147,6 +147,4 @@ public class Layout {
     public DoubleProperty columnWidthLastSyncProperty() {
         return columnWidthLastSync;
     }
-
-
 }

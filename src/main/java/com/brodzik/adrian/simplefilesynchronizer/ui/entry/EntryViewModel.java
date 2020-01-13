@@ -13,7 +13,7 @@ public class EntryViewModel implements ViewModel {
     private Mode mode = Mode.ADD;
 
     public EntryViewModel() {
-        entry.set(new Entry(0, "", "", "", SyncDirection.UNIDIRECTIONAL_1, "", true, new Date(0)));
+        entry.set(new Entry(0, "", "", "", SyncDirection.UNIDIRECTIONAL_1, 0, true, new Date(0)));
     }
 
     public Entry getEntry() {

@@ -29,7 +29,8 @@
                 </TableColumn>
                 <TableColumn prefWidth="70" text="Direction" fx:id="tableColumnDirection"
                              style="-fx-alignment: CENTER;" reorderable="false"/>
-                <TableColumn prefWidth="100" text="Frequency" reorderable="false" fx:id="tableColumnFrequency">
+                <TableColumn prefWidth="150" text="Frequency" reorderable="false" fx:id="tableColumnFrequency"
+                             style="-fx-alignment: CENTER;">
                     <cellValueFactory>
                         <PropertyValueFactory property="frequency"/>
                     </cellValueFactory>
