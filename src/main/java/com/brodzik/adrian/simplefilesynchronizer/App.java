@@ -16,6 +16,8 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,7 +26,7 @@ import java.awt.*;
 public class App extends Application {
     public static Stage primaryStage;
     public static boolean hasTray;
-
+    private static Logger LOGGER = LoggerFactory.getLogger(App.class);
     private BackgroundSynchronizer backgroundSynchronizer;
 
     private SystemTray tray;
@@ -47,20 +49,23 @@ public class App extends Application {
         }
 
         if (alreadyRunning) {
-            System.out.println("Application already running.");
+            LOGGER.info("Application already running. Shutting down...");
             JUnique.sendMessage(Constants.APP_ID, Constants.MESSAGE_SHOW);
             System.exit(0);
         }
 
+        LOGGER.info("Starting application...");
         Application.launch(args);
     }
 
     @Override
     public void start(Stage stage) {
-        App.primaryStage = stage;
+        primaryStage = stage;
 
         if (Constants.APP_DIR.toFile().mkdirs()) {
-            System.out.println("Created app directory: " + Constants.APP_DIR.toString());
+            LOGGER.info("Created app directory: " + Constants.APP_DIR.toString());
+        } else {
+            LOGGER.info("App directory already exists: " + Constants.APP_DIR.toString());
         }
 
         ConfigurationHandler.INSTANCE.load();
@@ -70,10 +75,10 @@ public class App extends Application {
         if (SystemTray.isSupported()) {
             Platform.setImplicitExit(false);
             SwingUtilities.invokeLater(this::addTrayIcon);
-            App.hasTray = true;
+            hasTray = true;
         } else {
-            System.out.println("SystemTray is not supported.");
-            App.hasTray = false;
+            LOGGER.warn("SystemTray is not supported.");
+            hasTray = false;
         }
 
         stage.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setWidth(stage.getWidth()));
@@ -99,7 +104,7 @@ public class App extends Application {
         EntryHandler.INSTANCE.save();
         SyncHandler.INSTANCE.save();
 
-        if (App.hasTray) {
+        if (hasTray) {
             SwingUtilities.invokeLater(() -> tray.remove(trayIcon));
         }
 
@@ -125,7 +130,7 @@ public class App extends Application {
 
             tray.add(trayIcon);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getLocalizedMessage());
         }
     }
 }

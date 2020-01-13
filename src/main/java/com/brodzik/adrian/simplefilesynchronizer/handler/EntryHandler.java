@@ -6,6 +6,8 @@ import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,7 +19,7 @@ import java.util.List;
 
 public final class EntryHandler implements Loadable, Listenable {
     public static final EntryHandler INSTANCE = new EntryHandler();
-
+    private static Logger LOGGER = LoggerFactory.getLogger(EntryHandler.class);
     private final ArrayList<Entry> entries = new ArrayList<>();
     private final ArrayList<Listener> listeners = new ArrayList<>();
 
@@ -90,8 +92,8 @@ public final class EntryHandler implements Loadable, Listenable {
 
                 reader.close();
             } catch (Exception e) {
-                System.out.println("Failed to load entries.");
-                e.printStackTrace();
+                LOGGER.error("Failed to load entries.");
+                LOGGER.error(e.getLocalizedMessage());
                 save();
             }
         }
@@ -119,10 +121,10 @@ public final class EntryHandler implements Loadable, Listenable {
             FileWriter writer = new FileWriter(Constants.ENTRIES_FILE.toFile());
             writer.write(array.toJSONString());
             writer.close();
+            LOGGER.info("Entries saved.");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to save entries.");
+            LOGGER.error(e.getLocalizedMessage());
         }
-
-        System.out.println("Entries saved.");
     }
 }

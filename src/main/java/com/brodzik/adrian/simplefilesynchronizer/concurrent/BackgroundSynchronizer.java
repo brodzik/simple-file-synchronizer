@@ -3,11 +3,15 @@ package com.brodzik.adrian.simplefilesynchronizer.concurrent;
 import com.brodzik.adrian.simplefilesynchronizer.handler.EntryHandler;
 import com.brodzik.adrian.simplefilesynchronizer.handler.SyncHandler;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.concurrent.Semaphore;
 
 public class BackgroundSynchronizer implements Runnable {
+    private static Logger LOGGER = LoggerFactory.getLogger(BackgroundSynchronizer.class);
+
     private Semaphore mutex = new Semaphore(1);
     private boolean active = true;
 
@@ -17,11 +21,11 @@ public class BackgroundSynchronizer implements Runnable {
             try {
                 mutex.acquire();
                 if (!active) {
-                    System.out.println("Background synchronizer shutting down.");
+                    LOGGER.info("Background synchronizer shutting down...");
                     return;
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getLocalizedMessage());
                 return;
             } finally {
                 mutex.release();
@@ -37,7 +41,7 @@ public class BackgroundSynchronizer implements Runnable {
             try {
                 Thread.sleep(Constants.SYNC_DELAY_SECONDS * 1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getLocalizedMessage());
                 return;
             }
         }
@@ -48,7 +52,7 @@ public class BackgroundSynchronizer implements Runnable {
             mutex.acquire();
             active = false;
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getLocalizedMessage());
         } finally {
             mutex.release();
         }

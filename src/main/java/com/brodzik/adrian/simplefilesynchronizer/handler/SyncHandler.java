@@ -7,6 +7,8 @@ import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileReader;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 
 public final class SyncHandler implements Loadable {
     public static final SyncHandler INSTANCE = new SyncHandler();
-
+    private static Logger LOGGER = LoggerFactory.getLogger(SyncHandler.class);
     public final Map<String, List<String>> fileList = new HashMap<>();
 
     private SyncHandler() {
@@ -32,17 +34,17 @@ public final class SyncHandler implements Loadable {
 
     public void sync(Entry entry) {
         if (entry.isEnabled()) {
-            System.out.println("Syncing: " + entry.getName());
+            LOGGER.info("Syncing: " + entry.getName());
 
             Date now = new Date();
 
             if (!InputHelper.isDirectory(entry.getFolderA())) {
-                System.out.println("Skipping sync. Directory not found: " + entry.getFolderA());
+                LOGGER.warn("Skipping sync. Directory not found: " + entry.getFolderA());
                 return;
             }
 
             if (!InputHelper.isDirectory(entry.getFolderB())) {
-                System.out.println("Skipping sync. Directory not found: " + entry.getFolderB());
+                LOGGER.warn("Skipping sync. Directory not found: " + entry.getFolderB());
                 return;
             }
 
@@ -60,7 +62,7 @@ public final class SyncHandler implements Loadable {
                     syncBidirectional(pathA, pathB, entry.getLastSync().getTime());
                     break;
                 default:
-                    System.out.println("Unknown sync direction.");
+                    LOGGER.error("Unknown sync direction.");
                     break;
             }
 
@@ -68,13 +70,13 @@ public final class SyncHandler implements Loadable {
                 fileList.put(pathA.toString(), getRelativeFilePaths(pathA));
                 fileList.put(pathB.toString(), getRelativeFilePaths(pathB));
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error(e.getLocalizedMessage());
             }
 
             entry.setLastSync(now);
             EntryHandler.INSTANCE.update(entry);
         } else {
-            System.out.println("Skipping: " + entry.getName());
+            LOGGER.info("Skipping: " + entry.getName());
         }
     }
 
@@ -91,13 +93,13 @@ public final class SyncHandler implements Loadable {
 
             srcFiles.forEach((relativePath, hash) -> {
                 if (hash.equals(destFiles.get(relativePath))) {
-                    System.out.println("File is up-to-date: " + relativePath);
+                    LOGGER.debug("File is up-to-date: " + relativePath);
                 } else {
                     try {
-                        System.out.println("Updating file: " + relativePath);
+                        LOGGER.debug("Updating file: " + relativePath);
                         Files.copy(Paths.get(src.toString(), relativePath), Paths.get(dest.toString(), relativePath), StandardCopyOption.REPLACE_EXISTING);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LOGGER.error(e.getLocalizedMessage());
                     }
                 }
             });
@@ -105,15 +107,15 @@ public final class SyncHandler implements Loadable {
             destFiles.forEach((relativePath, hash) -> {
                 if (!srcFiles.containsKey(relativePath)) {
                     try {
-                        System.out.println("Removing file: " + relativePath);
+                        LOGGER.debug("Removing file: " + relativePath);
                         Files.delete(Paths.get(dest.toString(), relativePath));
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LOGGER.error(e.getLocalizedMessage());
                     }
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getLocalizedMessage());
         }
     }
 
@@ -125,13 +127,13 @@ public final class SyncHandler implements Loadable {
             Map<String, String> filesA = getRelativeFileHashes(pathA);
             Map<String, String> filesB = getRelativeFileHashes(pathB);
 
-            System.out.println("Checking A to B...");
+            LOGGER.debug("Checking A to B...");
             syncBidirectionalHelper(pathA, pathB, lastSync, filesA, filesB);
 
-            System.out.println("Checking B to A...");
+            LOGGER.debug("Checking B to A...");
             syncBidirectionalHelper(pathB, pathA, lastSync, filesB, filesA);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getLocalizedMessage());
         }
     }
 
@@ -140,19 +142,19 @@ public final class SyncHandler implements Loadable {
             try {
                 if (filesB.containsKey(relativePath)) {
                     if (hash.equals(filesB.get(relativePath))) {
-                        System.out.println("File is up-to-date: " + relativePath);
+                        LOGGER.debug("File is up-to-date: " + relativePath);
                     } else {
                         long dateA = Paths.get(pathA.toString(), relativePath).toFile().lastModified();
                         long dateB = Paths.get(pathB.toString(), relativePath).toFile().lastModified();
 
                         if (dateA > lastSync && dateB > lastSync && lastSync > 0) {
                             // TODO: resolve conflict
-                            System.out.println("Sync conflict: " + relativePath);
+                            LOGGER.warn("Sync conflict: " + relativePath);
                         } else if (dateA > dateB) {
-                            System.out.println("Updating file: " + relativePath);
+                            LOGGER.debug("Updating file: " + relativePath);
                             Files.copy(Paths.get(pathA.toString(), relativePath), Paths.get(pathB.toString(), relativePath), StandardCopyOption.REPLACE_EXISTING);
                         } else {
-                            System.out.println("Updating file: " + relativePath);
+                            LOGGER.debug("Updating file: " + relativePath);
                             Files.copy(Paths.get(pathB.toString(), relativePath), Paths.get(pathA.toString(), relativePath), StandardCopyOption.REPLACE_EXISTING);
                         }
                     }
@@ -160,15 +162,15 @@ public final class SyncHandler implements Loadable {
                     List<String> prevFilesB = fileList.get(pathB.toString());
 
                     if (prevFilesB != null && prevFilesB.contains(relativePath)) {
-                        System.out.println("Removing file: " + relativePath);
+                        LOGGER.debug("Removing file: " + relativePath);
                         Files.delete(Paths.get(pathA.toString(), relativePath));
                     } else {
-                        System.out.println("Updating file: " + relativePath);
+                        LOGGER.debug("Updating file: " + relativePath);
                         Files.copy(Paths.get(pathA.toString(), relativePath), Paths.get(pathB.toString(), relativePath), StandardCopyOption.REPLACE_EXISTING);
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error(e.getLocalizedMessage());
             }
         });
     }
@@ -181,7 +183,7 @@ public final class SyncHandler implements Loadable {
                 String relativePath = path.toString().replace(p.toString(), "");
                 map.put(relativePath, HashHelper.getSHA256(path.toFile()));
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error(e.getLocalizedMessage());
             }
         });
 
@@ -198,9 +200,9 @@ public final class SyncHandler implements Loadable {
             File file = new File(newPath);
 
             if (file.mkdirs()) {
-                System.out.println("Directory created: " + newPath);
+                LOGGER.debug("Directory created: " + newPath);
             } else {
-                System.out.println("Directory already exists: " + newPath);
+                LOGGER.debug("Directory already exists: " + newPath);
             }
         });
     }
@@ -221,8 +223,8 @@ public final class SyncHandler implements Loadable {
 
                 reader.close();
             } catch (Exception e) {
-                System.out.println("Failed to load file list.");
-                e.printStackTrace();
+                LOGGER.error("Failed to load file list.");
+                LOGGER.error(e.getLocalizedMessage());
                 save();
             }
         }
@@ -243,10 +245,10 @@ public final class SyncHandler implements Loadable {
             FileWriter writer = new FileWriter(Constants.FILE_LIST_FILE.toFile());
             writer.write(array.toJSONString());
             writer.close();
+            LOGGER.info("File list saved.");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to save file list.");
+            LOGGER.error(e.getLocalizedMessage());
         }
-
-        System.out.println("File list saved.");
     }
 }

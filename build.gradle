@@ -25,6 +25,8 @@ dependencies {
     implementation "de.saxsys:mvvmfx:1.8.0"
     implementation "com.googlecode.json-simple:json-simple:1.1.1"
     implementation "it.sauronsoftware:junique:1.0.4"
+    implementation "org.slf4j:slf4j-api:1.7.30"
+    implementation "org.slf4j:slf4j-log4j12:1.7.30"
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
 }

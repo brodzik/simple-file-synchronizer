@@ -4,6 +4,8 @@ import com.brodzik.adrian.simplefilesynchronizer.data.Layout;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -11,7 +13,7 @@ import java.nio.file.Files;
 
 public final class ConfigurationHandler implements Loadable {
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
-
+    private static Logger LOGGER = LoggerFactory.getLogger(ConfigurationHandler.class);
     public Layout layout = new Layout(1280, 720, 0.85, 100, 200, 200, 70, 150, 70, 125);
 
     private ConfigurationHandler() {
@@ -41,8 +43,8 @@ public final class ConfigurationHandler implements Loadable {
 
                 reader.close();
             } catch (Exception e) {
-                System.out.println("Failed to load configuration. Configuration has been reset.");
-                e.printStackTrace();
+                LOGGER.error("Failed to load configuration.");
+                LOGGER.error(e.getLocalizedMessage());
                 save();
             }
         }
@@ -66,10 +68,10 @@ public final class ConfigurationHandler implements Loadable {
             FileWriter writer = new FileWriter(Constants.CONFIG_FILE.toFile());
             writer.write(json.toJSONString());
             writer.close();
+            LOGGER.info("Configuration saved.");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to save configuration.");
+            LOGGER.error(e.getLocalizedMessage());
         }
-
-        System.out.println("Config saved.");
     }
 }
