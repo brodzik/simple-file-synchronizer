@@ -62,6 +62,9 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
     @FXML
     private Button buttonSyncAll;
 
+    @FXML
+    private Button buttonMinimizeToTray;
+
     @InjectViewModel
     private DashboardViewModel viewModel;
 
@@ -104,6 +107,8 @@ public class DashboardView implements FxmlView<DashboardViewModel> {
         buttonRemoveEntry.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonSync.disableProperty().bind(Bindings.isNull(viewModel.selectedEntryProperty()));
         buttonSyncAll.disableProperty().bind(Bindings.isEmpty(viewModel.getEntries()));
+
+        buttonMinimizeToTray.setDisable(!App.hasTray);
 
         viewModel.selectedEntryProperty().bind(entryTable.getSelectionModel().selectedItemProperty());
         viewModel.getEntries().addListener((InvalidationListener) change -> entryTable.refresh());

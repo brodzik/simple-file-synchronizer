@@ -13,10 +13,10 @@
 ---
 - [ ] run on startup
 - [ ] unit tests
-- [ ] select folders/files to include/exclude
 - [x] unidirectional sync
 - [x] bidirectional sync
-- [ ] save layout settings
+- [x] save layout settings
 - [ ] clear app cache option
-- [ ] resolve "minimize to tray" option on Linux
+- [x] resolve "minimize to tray" option on Linux
 - [ ] connect logger
+- [ ] set frequency and sync automatically

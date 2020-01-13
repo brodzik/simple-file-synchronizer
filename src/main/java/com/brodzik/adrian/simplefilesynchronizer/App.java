@@ -22,6 +22,7 @@ import java.awt.*;
 
 public class App extends Application {
     public static Stage primaryStage;
+    public static boolean hasTray;
 
     private SystemTray tray;
     private TrayIcon trayIcon;
@@ -63,12 +64,13 @@ public class App extends Application {
         EntryHandler.INSTANCE.load();
         SyncHandler.INSTANCE.load();
 
-        Platform.setImplicitExit(false);
-
         if (SystemTray.isSupported()) {
+            Platform.setImplicitExit(false);
             SwingUtilities.invokeLater(this::addTrayIcon);
+            App.hasTray = true;
         } else {
             System.out.println("SystemTray is not supported.");
+            App.hasTray = false;
         }
 
         stage.widthProperty().addListener(observable -> ConfigurationHandler.INSTANCE.layout.setWidth(stage.getWidth()));
@@ -89,7 +91,7 @@ public class App extends Application {
         EntryHandler.INSTANCE.save();
         SyncHandler.INSTANCE.save();
 
-        if (SystemTray.isSupported()) {
+        if (App.hasTray) {
             SwingUtilities.invokeLater(() -> tray.remove(trayIcon));
         }
 
