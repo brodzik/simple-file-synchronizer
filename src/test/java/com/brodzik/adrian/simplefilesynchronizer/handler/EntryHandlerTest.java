@@ -3,9 +3,11 @@ package com.brodzik.adrian.simplefilesynchronizer.handler;
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.data.SyncDirection;
 import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -52,7 +54,7 @@ class EntryHandlerTest {
     }
 
     @Test
-    void testSaveLoad() {
+    void testSaveLoad() throws IOException {
         Constants.APP_DIR.toFile().mkdirs();
 
         EntryHandler.INSTANCE.getEntries().forEach(EntryHandler.INSTANCE::remove);
@@ -77,5 +79,7 @@ class EntryHandlerTest {
         Assertions.assertEquals(60, entry.getFrequency());
         Assertions.assertTrue(entry.isEnabled());
         Assertions.assertEquals(new Date(0), entry.getLastSync());
+
+        FileUtils.deleteDirectory(Constants.APP_DIR.toFile());
     }
 }

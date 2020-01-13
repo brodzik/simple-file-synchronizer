@@ -56,7 +56,7 @@ class SyncHandlerTest {
     }
 
     @Test
-    void testSaveLoad() {
+    void testSaveLoad() throws IOException {
         Constants.APP_DIR.toFile().mkdirs();
 
         SyncHandler.INSTANCE.fileList.clear();
@@ -80,5 +80,7 @@ class SyncHandlerTest {
         Assertions.assertNull(SyncHandler.INSTANCE.fileList.get("a"));
         Assertions.assertEquals(0, SyncHandler.INSTANCE.fileList.get("b").size());
         Assertions.assertEquals(Arrays.asList("d", "e", "f"), SyncHandler.INSTANCE.fileList.get("c"));
+
+        FileUtils.deleteDirectory(Constants.APP_DIR.toFile());
     }
 }
