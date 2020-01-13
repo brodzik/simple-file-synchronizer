@@ -20,8 +20,8 @@ import java.util.List;
 public final class EntryHandler implements Loadable, Listenable {
     public static final EntryHandler INSTANCE = new EntryHandler();
     private static Logger LOGGER = LoggerFactory.getLogger(EntryHandler.class);
-    private final ArrayList<Entry> entries = new ArrayList<>();
-    private final ArrayList<Listener> listeners = new ArrayList<>();
+    private final List<Entry> entries = new ArrayList<>();
+    private final List<Listener> listeners = new ArrayList<>();
 
     private EntryHandler() {
     }
@@ -77,7 +77,7 @@ public final class EntryHandler implements Loadable, Listenable {
                 JSONParser parser = new JSONParser();
                 JSONArray array = (JSONArray) parser.parse(reader);
 
-                for (Object object : array) {
+                array.forEach(object -> {
                     JSONObject o = (JSONObject) object;
                     Entry entry = new Entry(Integer.parseInt(o.get("id").toString()),
                             (String) o.get("name"),
@@ -88,7 +88,7 @@ public final class EntryHandler implements Loadable, Listenable {
                             (boolean) o.get("enabled"),
                             new Date(Long.parseLong(o.get("lastSync").toString())));
                     entries.add(entry);
-                }
+                });
 
                 reader.close();
             } catch (Exception e) {
@@ -103,7 +103,7 @@ public final class EntryHandler implements Loadable, Listenable {
     public void save() {
         JSONArray array = new JSONArray();
 
-        for (Entry entry : entries) {
+        entries.forEach(entry -> {
             JSONObject object = new JSONObject();
             object.put("id", entry.getId());
             object.put("name", entry.getName());
@@ -113,9 +113,8 @@ public final class EntryHandler implements Loadable, Listenable {
             object.put("frequency", entry.getFrequency());
             object.put("enabled", entry.isEnabled());
             object.put("lastSync", entry.getLastSync().getTime());
-
             array.add(object);
-        }
+        });
 
         try {
             FileWriter writer = new FileWriter(Constants.ENTRIES_FILE.toFile());

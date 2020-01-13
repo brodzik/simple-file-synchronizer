@@ -88,8 +88,8 @@ public final class SyncHandler implements Loadable {
         try {
             createDirs(src, dest);
 
-            HashMap<String, String> srcFiles = getRelativeFileHashes(src);
-            HashMap<String, String> destFiles = getRelativeFileHashes(dest);
+            Map<String, String> srcFiles = getRelativeFileHashes(src);
+            Map<String, String> destFiles = getRelativeFileHashes(dest);
 
             srcFiles.forEach((relativePath, hash) -> {
                 if (hash.equals(destFiles.get(relativePath))) {
@@ -176,8 +176,8 @@ public final class SyncHandler implements Loadable {
         });
     }
 
-    private HashMap<String, String> getRelativeFileHashes(Path p) throws IOException {
-        HashMap<String, String> map = new HashMap<>();
+    private Map<String, String> getRelativeFileHashes(Path p) throws IOException {
+        Map<String, String> map = new HashMap<>();
 
         Files.walk(p).filter(Files::isRegularFile).forEach(path -> {
             try {
@@ -217,10 +217,10 @@ public final class SyncHandler implements Loadable {
                 JSONParser parser = new JSONParser();
                 JSONArray array = (JSONArray) parser.parse(reader);
 
-                for (Object object : array) {
+                array.forEach(object -> {
                     JSONObject o = (JSONObject) object;
                     fileList.put(o.get("rootPath").toString(), (List<String>) o.get("relativeFilePaths"));
-                }
+                });
 
                 reader.close();
             } catch (Exception e) {
