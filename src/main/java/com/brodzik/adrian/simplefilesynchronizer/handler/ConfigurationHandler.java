@@ -13,7 +13,6 @@ public final class ConfigurationHandler implements Loadable {
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
 
     public Layout layout = new Layout(1280, 720, 0.85, 100, 200, 200, 70, 150, 70, 125);
-    public boolean runOnStartup = false;
 
     private ConfigurationHandler() {
     }
@@ -40,8 +39,6 @@ public final class ConfigurationHandler implements Loadable {
                         Double.parseDouble(json.get("columnWidthLastSync").toString())
                 );
 
-                runOnStartup = (boolean) json.get("runOnStartup");
-
                 reader.close();
             } catch (Exception e) {
                 System.out.println("Failed to load configuration. Configuration has been reset.");
@@ -64,8 +61,6 @@ public final class ConfigurationHandler implements Loadable {
         json.put("columnWidthFrequency", layout.getColumnWidthFrequency());
         json.put("columnWidthEnabled", layout.getColumnWidthEnabled());
         json.put("columnWidthLastSync", layout.getColumnWidthLastSync());
-
-        json.put("runOnStartup", runOnStartup);
 
         try {
             FileWriter writer = new FileWriter(Constants.CONFIG_FILE.toFile());

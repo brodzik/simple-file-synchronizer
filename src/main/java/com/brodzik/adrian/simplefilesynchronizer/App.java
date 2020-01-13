@@ -113,17 +113,12 @@ public class App extends Application {
             trayIcon.setImageAutoSize(true);
             tray = SystemTray.getSystemTray();
 
-            CheckboxMenuItem runOnStartupItem = new CheckboxMenuItem("Run on startup");
-            runOnStartupItem.setState(ConfigurationHandler.INSTANCE.runOnStartup);
-            runOnStartupItem.addItemListener(itemEvent -> ConfigurationHandler.INSTANCE.runOnStartup = runOnStartupItem.getState());
-
             MenuItem exitItem = new MenuItem("Exit");
             exitItem.addActionListener(actionEvent -> Platform.exit());
 
             trayIcon.addActionListener(actionEvent -> Platform.runLater(() -> App.primaryStage.show()));
             trayIcon.setToolTip(Constants.APP_NAME);
 
-            popup.add(runOnStartupItem);
             popup.add(exitItem);
 
             trayIcon.setPopupMenu(popup);
