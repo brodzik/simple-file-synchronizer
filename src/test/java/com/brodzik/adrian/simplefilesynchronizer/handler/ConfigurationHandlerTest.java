@@ -1,12 +1,15 @@
 package com.brodzik.adrian.simplefilesynchronizer.handler;
 
 import com.brodzik.adrian.simplefilesynchronizer.data.Layout;
+import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ConfigurationHandlerTest {
     @Test
     void testSaveLoad() {
+        Constants.APP_DIR.toFile().mkdirs();
+
         ConfigurationHandler.INSTANCE.layout = new Layout(1920, 1080, 0.5, 10, 20, 30, 40, 50, 60, 70);
         ConfigurationHandler.INSTANCE.save();
         ConfigurationHandler.INSTANCE.layout = new Layout(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);

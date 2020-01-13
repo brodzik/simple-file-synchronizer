@@ -2,6 +2,7 @@ package com.brodzik.adrian.simplefilesynchronizer.handler;
 
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.data.SyncDirection;
+import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -52,6 +53,8 @@ class EntryHandlerTest {
 
     @Test
     void testSaveLoad() {
+        Constants.APP_DIR.toFile().mkdirs();
+
         EntryHandler.INSTANCE.getEntries().forEach(EntryHandler.INSTANCE::remove);
 
         EntryHandler.INSTANCE.add(new Entry(0, "a", "b", "c", SyncDirection.UNIDIRECTIONAL_1, 0, true, new Date(0)));

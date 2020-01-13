@@ -2,6 +2,7 @@ package com.brodzik.adrian.simplefilesynchronizer.handler;
 
 import com.brodzik.adrian.simplefilesynchronizer.data.Entry;
 import com.brodzik.adrian.simplefilesynchronizer.data.SyncDirection;
+import com.brodzik.adrian.simplefilesynchronizer.reference.Constants;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,8 @@ class SyncHandlerTest {
 
     @Test
     void testSaveLoad() {
+        Constants.APP_DIR.toFile().mkdirs();
+
         SyncHandler.INSTANCE.fileList.clear();
 
         Assertions.assertEquals(0, SyncHandler.INSTANCE.fileList.size());
