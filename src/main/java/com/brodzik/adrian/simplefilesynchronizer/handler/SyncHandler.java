@@ -148,13 +148,14 @@ public final class SyncHandler implements Loadable {
                         long dateB = Paths.get(pathB.toString(), relativePath).toFile().lastModified();
 
                         if (dateA > lastSync && dateB > lastSync && lastSync > 0) {
-                            // TODO: resolve conflict
-                            LOGGER.warn("Sync conflict: " + relativePath);
-                        } else if (dateA > dateB) {
-                            LOGGER.debug("Updating file: " + relativePath);
+                            LOGGER.warn("Sync conflict, newest file will be chosen: " + relativePath);
+                        }
+
+                        LOGGER.debug("Updating file: " + relativePath);
+
+                        if (dateA > dateB) {
                             Files.copy(Paths.get(pathA.toString(), relativePath), Paths.get(pathB.toString(), relativePath), StandardCopyOption.REPLACE_EXISTING);
                         } else {
-                            LOGGER.debug("Updating file: " + relativePath);
                             Files.copy(Paths.get(pathB.toString(), relativePath), Paths.get(pathA.toString(), relativePath), StandardCopyOption.REPLACE_EXISTING);
                         }
                     }

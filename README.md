@@ -4,5 +4,8 @@ Simple desktop application for file synchronization
 ## Prerequisites
 - Java SE Development Kit 11.0.5
 
-## Running
+## Run app
 `./gradlew run`
+
+## Build JAR
+`./gradlew build`
