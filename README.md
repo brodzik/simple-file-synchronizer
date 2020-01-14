@@ -11,4 +11,4 @@ Simple desktop application for file synchronization
 `./gradlew run`
 
 ## Build JAR
-`./gradlew build`
+`./gradlew jar`
