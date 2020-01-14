@@ -136,6 +136,8 @@ class SyncHandlerTest {
             reader.close();
         }
 
+        Entry entry = new Entry(0, "", pathA.toString(), pathB.toString(), SyncDirection.BIDIRECTIONAL, 0, true, new Date(0));
+
         {
             FileWriter writer = new FileWriter(Paths.get(pathA.toString(), "test1.txt").toFile());
             writer.write("test 1");
@@ -148,7 +150,7 @@ class SyncHandlerTest {
             writer.close();
         }
 
-        SyncHandler.INSTANCE.sync(new Entry(0, "", pathA.toString(), pathB.toString(), SyncDirection.BIDIRECTIONAL, 0, true, new Date(0)));
+        SyncHandler.INSTANCE.sync(entry);
 
         {
             FileWriter writer = new FileWriter(Paths.get(pathA.toString(), "test2.txt").toFile());
@@ -156,7 +158,7 @@ class SyncHandlerTest {
             writer.close();
         }
 
-        SyncHandler.INSTANCE.sync(new Entry(0, "", pathA.toString(), pathB.toString(), SyncDirection.BIDIRECTIONAL, 0, true, new Date(0)));
+        SyncHandler.INSTANCE.sync(entry);
 
         {
             BufferedReader reader = new BufferedReader(new FileReader(Paths.get(pathB.toString(), "test2.txt").toFile()));

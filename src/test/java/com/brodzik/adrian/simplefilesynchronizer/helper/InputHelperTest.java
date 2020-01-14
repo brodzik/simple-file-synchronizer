@@ -1,9 +1,12 @@
 package com.brodzik.adrian.simplefilesynchronizer.helper;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 class InputHelperTest {
     @Test
@@ -16,13 +19,11 @@ class InputHelperTest {
     }
 
     @Test
-    void testIsDirectory() {
-        File file = new File("a/b/c");
-        file.mkdirs();
+    void testIsDirectory() throws IOException {
+        Path path = Files.createTempDirectory("a");
 
-        Assertions.assertTrue(InputHelper.isDirectory("a"));
-        Assertions.assertTrue(InputHelper.isDirectory("a/b"));
-        Assertions.assertTrue(InputHelper.isDirectory("a/b/c"));
-        Assertions.assertFalse(InputHelper.isDirectory("a/b/c/d/"));
+        Assertions.assertTrue(InputHelper.isDirectory(path.toString()));
+
+        FileUtils.deleteDirectory(path.toFile());
     }
 }
